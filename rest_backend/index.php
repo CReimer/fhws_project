@@ -8,6 +8,10 @@
 
 // Don't forget to load all neccessary classes!
 // Initialize Slim Framework
+
+error_reporting(E_ALL);
+ini_set('display_errors','on');
+
 require 'vendor/slim/Slim/App.php';
 
 $app = new \Slim\App();
