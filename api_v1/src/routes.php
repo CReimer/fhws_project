@@ -1,12 +1,11 @@
 <?php
 // Routes
 require_once 'classes/class.Projects.php';
-
 $app->get('/projects', function () {
     $projectsObj = new Projects();
-    return $projectsObj->getProjects();
+    echo $projectsObj->getProjects();
 });
-$app->get('/projects/:uid', function ($uid) {
+$app->get('/projects/[{id}]', function ($request, $response, $args) {
     $projectsObj = new Projects();
-    return $projectsObj->getProjectById($uid);
+    echo $projectsObj->getProjectById($args['id']);
 });

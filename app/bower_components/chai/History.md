@@ -171,7 +171,7 @@ commit logs available on GitHub](https://github.com/chaijs/chai/commits/master).
   * docs: [config] make public, express param type
   * Merge pull request #251 from romario333/threshold3
   * Fix issue #166 - configurable threshold in objDisplay.
-  * Move configuration options to config.js.
+  * Move configuration options to config.json.
   * Merge pull request #233 from Empeeric/master
   * Merge pull request #244 from leider/fix_for_contains
   * Merge pull request #247 from didoarellano/typo-fixes

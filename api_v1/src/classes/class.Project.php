@@ -7,25 +7,22 @@
  * Time: 22:22
  */
 class Project {
-    private $dummy_data;
+    private $dummy_data = [];
 
     /**
      * Project constructor.
      */
-    public function __construct() {
-        $this->dummy_data[0] = ["name" => 'Test1', "owner" => "User1"];
-        $this->dummy_data[1] = ["name" => 'Test2', "owner" => "User2"];
-        $this->dummy_data[2] = ["name" => 'Test3', "owner" => "User3"];
+    public function __construct($val1, $val2) {
+        $this->dummy_data['name'] = $val1;
+        $this->dummy_data['whatever'] = $val2;
     }
 
     public function returnJson($minimized = false) {
-        $temp = array();
-        foreach ($this->dummy_data as $single) {
-            if ($minimized) {
-                array_push($temp, $single["name"]);
-            } else {
-                array_push($temp, $single);
-            }
+        if ($minimized) {
+            return json_encode($this->dummy_data['name']);
+        }
+        else {
+            return json_encode($this->dummy_data);
         }
     }
 }

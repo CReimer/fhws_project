@@ -17,9 +17,9 @@ class Projects
      */
     public function __construct()
     {
-        $this->dummy_data[0] = new Project();
-        $this->dummy_data[1] = new Project();
-        $this->dummy_data[2] = new Project();
+        $this->dummy_data[0] = new Project("Test1", "abcde");
+        $this->dummy_data[1] = new Project("Test2", "fghij");
+        $this->dummy_data[2] = new Project("Test3", "klmno");
     }
 
     public function getProjects() {
@@ -28,7 +28,7 @@ class Projects
             array_push($temp,$single->returnJson(true));
 
         }
-        return $temp;
+        return json_encode($temp);
     }
 
     /**
