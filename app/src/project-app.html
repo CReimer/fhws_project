@@ -22,7 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="my-icons.html">
 
-<dom-module id="my-app">
+<dom-module id="fhws_project">
   <template>
     <style>
       :host {
@@ -104,7 +104,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     Polymer({
-      is: 'my-app',
+      is: 'fhws_project',
 
       properties: {
         page: {
@@ -119,7 +119,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       _routePageChanged: function(page) {
-        this.page = page || 'view1';
+        this.page = page || 'my-view1';
 
         if (!this.$.drawer.persistent) {
           this.$.drawer.close();
@@ -133,7 +133,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _showPage404: function() {
-        this.page = 'view404';
+        this.page = 'my-view404';
       },
     });
   </script>
