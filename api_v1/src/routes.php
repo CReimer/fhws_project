@@ -7,11 +7,15 @@ $app->get('/projects', function () {
 });
 $app->post('/projects', function($request, $response, $args) {
     $projectsObj = new Projects();
-    echo $projectsObj->newProject($_POST);
+    echo $projectsObj->newProject($request->getParsedBody());
 });
 
 
 $app->get('/projects/[{id}]', function ($request, $response, $args) {
     $projectsObj = new Projects();
     echo $projectsObj->getProjectById($args['id']);
+});
+$app->delete('/projects/[{id}]', function ($request, $response, $args) {
+    $projectsObj = new Projects();
+    echo $projectsObj->delProjectById($args['id']);
 });

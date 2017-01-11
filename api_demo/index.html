@@ -2,17 +2,55 @@
 <html lang="en">
 <head>
     <script src="./jquery-3.1.1.min.js"></script>
+    <script>
+        function delProject() {
+            var val = $('input#pDel').val();
+            $.ajax({
+                type: "DELETE",
+                url: "../api_v1/index.php/projects/" + val,
+                success: function (msg) {
+                    alert("Data deleted" + msg);
+                }
+            })
+        }
+
+        function newProject() {
+            $.ajax({
+                type: "POST",
+                url: "../api_v1/index.php/projects",
+                data: {
+                    name: $('input#pNewName').val(),
+                    desc: $('input#pNewDesc').val()
+                },
+                success: function (msg) {
+                    alert("Project created" + msg);
+                }
+            })
+        }
+    </script>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <h1>API Demo</h1>
+<!--####################################################################-->
 <h2>Projekt erstellen</h2>
-<form action="../api_v1/index.php/projects" method="post">
-    Name: <input type="text" name="prname"><br>
-    Description: <input type="text" name="pdesc"><br>
+<form onsubmit="event.preventDefault(); newProject();">
+    Name: <label>
+    <input id="pNewName" type="text" name="Name">
+</label><br>
+    Description: <input id="pNewDesc" type="text" name="pdesc"><br>
     <input type="submit" value="Submit">
 </form>
+<!--####################################################################-->
+<h2>Projekt anzeigen</h2>
+<!--####################################################################-->
+<h2>Projekt löschen</h2>
+<form onsubmit="event.preventDefault(); delProject();">
+    <input id="pDel" type="number">
+    <input type="submit" value="Submit">
+</form>
+
 
 </body>
 </html>
