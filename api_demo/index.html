@@ -27,6 +27,21 @@
                 }
             })
         }
+
+        function doLogin() {
+            console.log("do login");
+            $.ajax({
+                type: "GET",
+                url: "../api_v1/index.php/login",
+                headers: {
+                    "Authorization": "Basic " + btoa($('input#username').val() + ':' + $('input#password').val()),
+                },
+                success: function (data) {
+                    console.log(data);
+
+                }
+            })
+        }
     </script>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -34,6 +49,16 @@
 <body>
 <h1>API Demo</h1>
 <!--####################################################################-->
+
+<h2>Login</h2>
+<form onsubmit="event.preventDefault(); doLogin();">
+    K-Nummer: <label>
+    <input id="username" type="text" name="Name">
+</label><br>
+    Passwort: <input id="password" type="text" name="pdesc"><br>
+    <input type="submit" value="Submit">
+</form>
+
 <h2>Projekt erstellen</h2>
 <form onsubmit="event.preventDefault(); newProject();">
     Name: <label>
