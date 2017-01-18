@@ -31,7 +31,7 @@ class Login {
         $this->dbh = $databaseObj->getPdo();
 
 
-        $auth64 = $request->getHeader('authorization')[0];
+        $auth64 = $request->getHeaderLine('authorization');
         $opts = array(
             'http' => array(
                 'method' => 'GET',

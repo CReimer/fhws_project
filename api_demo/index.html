@@ -3,6 +3,8 @@
 <head>
     <script src="./jquery-3.1.1.min.js"></script>
     <script>
+        var jwtToken;
+
         function delProject() {
             var val = $('input#pDel').val();
             $.ajax({
@@ -22,6 +24,9 @@
                     name: $('input#pNewName').val(),
                     desc: $('input#pNewDesc').val()
                 },
+                headers: {
+                    "Authorization": "Bearer " + jwtToken
+                },
                 success: function (msg) {
                     alert("Project created" + msg);
                 }
@@ -36,9 +41,9 @@
                 headers: {
                     "Authorization": "Basic " + btoa($('input#username').val() + ':' + $('input#password').val()),
                 },
-                success: function (data) {
-                    console.log(data);
-
+                success: function (data, status, jqXHR) {
+                    console.log("successfully logged in");
+                    jwtToken = jqXHR.getResponseHeader('x-fhws-jwt-token');
                 }
             })
         }
@@ -55,7 +60,7 @@
     K-Nummer: <label>
     <input id="username" type="text" name="Name">
 </label><br>
-    Passwort: <input id="password" type="text" name="pdesc"><br>
+    Passwort: <input id="password" type="password" name="pdesc"><br>
     <input type="submit" value="Submit">
 </form>
 

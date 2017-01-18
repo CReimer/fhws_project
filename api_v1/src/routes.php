@@ -2,11 +2,18 @@
 // Routes
 require_once 'classes/class.Projects.php';
 require_once 'classes/class.Login.php';
+require_once 'classes/class.User.php';
+
 $app->get('/projects', function () {
     $projectsObj = new Projects();
     echo $projectsObj->getProjects();
 });
 $app->post('/projects', function ($request, $response, $args) {
+    $jwtToken = $request->getHeaderLine('authorization');
+
+    $userObj = new User($jwtToken);
+
+
     $projectsObj = new Projects();
     echo $projectsObj->newProject($request->getParsedBody());
 });
