@@ -1,0 +1,8 @@
+{
+  "database": {
+    "host": "c-reimer.de:3306",
+    "dbname": "xb1440_db5",
+    "username": "xb1440_5",
+    "password": "fhws_project"
+  }
+}

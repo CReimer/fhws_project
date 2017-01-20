@@ -12,7 +12,7 @@ class Config {
      * Config constructor.
      */
     public function __construct() {
-        $string = file_get_contents("../../config.json");
+        $string = file_get_contents("config.json");
         $this->json = json_decode($string, true);
     }
 

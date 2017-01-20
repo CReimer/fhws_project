@@ -6,29 +6,24 @@
  * Date: 19.12.16
  * Time: 22:21
  */
-require_once 'class.Project.php';
+require_once 'class.Database.php';
 
-class Projects
-{
-    private $dummy_data;
-
+class Projects {
     /**
      * Projects constructor.
      */
-    public function __construct()
-    {
-        $this->dummy_data[0] = new Project("Test1", "abcde");
-        $this->dummy_data[1] = new Project("Test2", "fghij");
-        $this->dummy_data[2] = new Project("Test3", "klmno");
+    public function __construct() {
+        $databaseObj = new Database();
+        $this->dbh = $databaseObj->getPdo();
     }
 
     public function getProjects() {
-        $temp = array();
-        foreach ($this->dummy_data as $single) {
-            array_push($temp,$single->returnJson(true));
 
-        }
-        return json_encode($temp);
+        $sql = <<<SQL
+SELECT name FROM projects
+SQL;
+        $sth = $this->dbh->prepare($sql);
+        return json_encode($sth->fetchAll());
     }
 
     /**
@@ -36,6 +31,40 @@ class Projects
      * @return mixed
      */
     public function getProjectById($id) {
-        return $this->dummy_data[$id]->returnJson();
+        $sql = <<<SQL
+SELECT * FROM projects
+WHERE id = :id
+SQL;
+        $sth = $this->dbh->prepare($sql);
+        $sth->bindParam(':id', $id);
+        return json_encode($sth->fetchAll());
+    }
+
+    /**
+     * @param $form
+     */
+    public function newProject($form) {
+        $sql = <<<SQL
+INSERT INTO projects (`name`, `description`)
+VALUES (:name, :desc)
+SQL;
+        $sth = $this->dbh->prepare($sql);
+        $sth->bindParam(':name', $form['name']);
+        $sth->bindParam(':desc', $form['desc']);
+        $sth->execute();
+
+        $test = $this->dbh->lastInsertId();
+
+        echo $test;
+    }
+
+    public function delProjectById($id) {
+        $sql = <<<SQL
+UPDATE projects SET `deleted` = '1' WHERE `projects`.`id` = :id
+SQL;
+        $sth = $this->dbh->prepare($sql);
+        $sth->bindParam(':id', $id);
+        $sth->execute();
+
     }
 }

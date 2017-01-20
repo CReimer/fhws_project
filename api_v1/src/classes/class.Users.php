@@ -9,3 +9,6 @@
 class Users {
 
 }
+
+// New User add to User Database to get a user id
+// We also need a bridge table between user and project to allow multiple users
