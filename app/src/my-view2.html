@@ -19,13 +19,67 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         padding: 10px;
       }
+
+      .browse-element {
+        margin: 0px 24px;
+        padding: 16px;
+        color: #757575;
+        border-radius: 5px;
+        background-color: #fff;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+      }
+
+      input[type=text] {
+        width: 70%;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        background-image: url('../images/search_icon.png');
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+      }
+
     </style>
 
-    <div class="card">
-      <div class="circle">2</div>
-      <h1>View Two</h1>
-      <p>Ea duis bonorum nec, falli paulo aliquid ei eum.</p>
-      <p>Id nam odio natum malorum, tibique copiosae expetenda mel ea.Detracto suavitate repudiandae no eum. Id adhuc minim soluta nam.Id nam odio natum malorum, tibique copiosae expetenda mel ea.</p>
+    <div class="browse-element">
+      <input type="text" name="search" placeholder="Suchbegriff">
+      <form>
+        <input type="checkbox" value="Projekt">Projektarbeit<br>
+        <input type="checkbox" value="Bachelor">Bachelorarbeit<br>
+        <input type="checkbox" value="Master">Masterarbeit<br>
+      </form>
+      <button>Aktualisieren</button>
+    </div>
+    <div class="entry">
+      <div class="circle">Inf</div>
+      <div class="circle">WInf</div>
+
+      <h1>Projekttitel</h1>
+      <p>Hier könnte ein Objekt angezeigt werden.</p>
+      <p>Hier könnte noch was anderes stehen.</p>
+      <a href="#">Mehr Details</a>
+    </div>
+    <div class="entry">
+      <div class="circle">WInf</div>
+      <div class="circle">EC</div>
+      <h1>Bachelorarbeit</h1>
+      <p>Hier könnte ein Objekt angezeigt werden.</p>
+      <p>Hier könnte noch was anderes stehen.</p>
+      <a href="#">Mehr Details</a>
+    </div>
+    <div class="entry">
+      <div class="circle">Inf</div>
+      <div class="circle">WInf</div>
+      <div class="circle">EC</div>
+      <h1>Masterarbeit</h1>
+      <p>Hier könnte ein Objekt angezeigt werden.</p>
+      <p>Hier könnte noch was anderes stehen.</p>
+      <a href="#">Mehr Details</a>
     </div>
   </template>
 
