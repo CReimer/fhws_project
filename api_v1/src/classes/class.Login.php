@@ -25,6 +25,7 @@ class Login {
 
     /**
      * Login constructor.
+     * @param $request
      */
     public function __construct($request) {
         $databaseObj = new Database();

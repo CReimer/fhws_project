@@ -15,7 +15,7 @@ class User {
         $opts = array(
             'http' => array(
                 'method' => 'GET',
-                'header' => "Authorization: $jwtToken"
+                'header' => "Authorization: " . $jwtToken
             )
         );
         $context = stream_context_create($opts);
