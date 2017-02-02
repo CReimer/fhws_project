@@ -19,6 +19,10 @@ $app->post('/projects', function ($request, $response, $args) {
 });
 
 
+$app->get('/projects/status', function ($request, $response, $args) {
+    $projectsObj = new Projects();
+    echo $projectsObj->getPossibleStatuses();
+});
 $app->get('/projects/[{id}]', function ($request, $response, $args) {
     $projectsObj = new Projects();
     echo $projectsObj->getProjectById($args['id']);
@@ -31,10 +35,7 @@ $app->patch('/projects[{id}]', function($request, $response, $args) {
     $projectsObj = new Projects();
     echo $projectsObj->patchProjectById($args['id'], $request->getParsedBody());
 });
-$app->get('/projects/status', function ($request, $response, $args) {
-    $projectsObj = new Projects();
-    echo $projectsObj->getPossibleStatuses();
-});
+
 
 $app->get('/login', function ($request, $response, $args) {
     $loginObj = new Login($request);
