@@ -101,6 +101,20 @@ SELECT * FROM project_status
 SQL;
         $sth = $this->dbh->prepare($sql);
         $sth->bindParam(':id', $id);
+        $sth->execute();
+        return json_encode($sth->fetchAll(PDO::FETCH_ASSOC));
+    }
+
+    public function getProjectStatusById($id) {
+        $sql = <<<SQL
+SELECT project_status.name as status, project_status.id as id FROM `projects`
+INNER JOIN project_status
+ON projects.status=project_status.id
+WHERE projects.id = :id
+SQL;
+        $sth = $this->dbh->prepare($sql);
+        $sth->bindParam(':id', $id);
+        $sth->execute();
         return json_encode($sth->fetchAll(PDO::FETCH_ASSOC));
     }
 }

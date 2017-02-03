@@ -23,6 +23,11 @@ $app->get('/projects/status', function ($request, $response, $args) {
     $projectsObj = new Projects();
     echo $projectsObj->getPossibleStatuses();
 });
+$app->get('/projects/{id}/status', function ($request, $response, $args) {
+    $projectsObj = new Projects();
+    echo $projectsObj->getProjectStatusById($args['id']);
+});
+
 $app->get('/projects/[{id}]', function ($request, $response, $args) {
     $projectsObj = new Projects();
     echo $projectsObj->getProjectById($args['id']);
