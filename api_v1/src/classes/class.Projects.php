@@ -37,7 +37,7 @@ WHERE id = :id
 SQL;
         $sth = $this->dbh->prepare($sql);
         $sth->bindParam(':id', $id);
-        return json_encode($sth->fetchAll());
+        return json_encode($sth->fetchAll(PDO::FETCH_ASSOC));
     }
 
     /**

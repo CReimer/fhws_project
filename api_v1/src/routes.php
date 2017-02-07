@@ -65,3 +65,8 @@ $app->post('/files', function ($request, $response, $args) {
     $filesObj = new Filemanager();
 
 });
+
+$app->get('/search/projects', function ($request, $response, $args) {
+    $projectsObj = new Projects();
+    echo $projectsObj->searchProject($args['phrase']);
+});
