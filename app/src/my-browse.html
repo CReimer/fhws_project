@@ -1,17 +1,7 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
 
-<dom-module id="my-view2">
+<dom-module id="my-browse">
   <template>
     <style include="shared-styles">
       :host {
@@ -20,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding: 10px;
       }
 
-      .browse-element {
+      .search-elements {
         margin: 0px 24px;
         padding: 16px;
         color: #757575;
@@ -44,16 +34,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         transition: width 0.4s ease-in-out;
       }
 
+
+      .button {
+        background-color: var(--app-primary-color);
+        color: white;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: auto;
+        padding: 10px 18px;
+      }
+
     </style>
 
-    <div class="browse-element">
+    <div class="search-elements">
       <input type="text" name="search" placeholder="Suchbegriff">
+      <button class="button">Aktualisieren</button>
       <form>
-        <input type="checkbox" value="Projekt">Projektarbeit<br>
-        <input type="checkbox" value="Bachelor">Bachelorarbeit<br>
-        <input type="checkbox" value="Master">Masterarbeit<br>
+        Typ:
+        <input type="checkbox" value="Projekt" checked>Projektarbeit
+        <input type="checkbox" value="Bachelor" checked>Bachelorarbeit
+        <input type="checkbox" value="Master" checked>Masterarbeit
       </form>
-      <button>Aktualisieren</button>
+
     </div>
     <div class="entry">
       <div class="circle">Inf</div>
@@ -85,7 +88,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     Polymer({
-      is: 'my-view2',
+      is: 'my-browse',
     });
   </script>
 </dom-module>
