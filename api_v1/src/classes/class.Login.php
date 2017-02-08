@@ -25,6 +25,7 @@ class Login {
 
     /**
      * Login constructor.
+     * @param $request
      */
     public function __construct($request) {
         $databaseObj = new Database();
@@ -72,7 +73,7 @@ SQL;
         foreach ($headers as $k => $v) {
             $t = explode(':', $v, 2);
             if (sizeof($t) > 1) {
-                $header[strtolower(trim($t[0]))] = strtolower(trim($t[1]));
+                $header[strtolower(trim($t[0]))] = trim($t[1]);
             }
         }
         return $header;

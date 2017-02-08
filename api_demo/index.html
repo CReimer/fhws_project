@@ -47,6 +47,25 @@
                 }
             })
         }
+
+        $('body').on('change', '#uploadFile', function () {
+            var data = new FormData(); // das ist unser Daten-Objekt ...
+            data.append('file', this.files[0]); // ... an die wir unsere Datei anhängen
+            $.ajax({
+                url: '../api_v1/index.php/files', // Wohin soll die Datei geschickt werden?
+                data: data,          // Das ist unser Datenobjekt.
+                type: 'POST',         // HTTP-Methode, hier: POST
+                processData: false,
+                contentType: false,
+                // und wenn alles erfolgreich verlaufen ist, schreibe eine Meldung
+                // in das Response-Div
+                success: function () {
+                    $("#responses").append("Datei erfolgreich hochgeladen");
+                }
+            })
+        });
+
+
     </script>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -80,7 +99,11 @@
     <input id="pDel" type="number">
     <input type="submit" value="Submit">
 </form>
-
+<h2>Datei hochladen</h2>
+<form id="fileupload" onsubmit="event.preventDefault()">
+    <input id="uploadFile" name="uploaded_file" class="input-file" type="file">
+    <input type="submit" value="Submit">
+</form>
 
 </body>
 </html>
