@@ -1,5 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
+<script src="js/my-login.js"></script>
 
 <dom-module id="my-login">
     <template>
@@ -63,20 +64,20 @@
                 }
             }
         </style>
-        <form action="">
+        <form onsubmit="event.preventDefault(); loginSubmit(this.getElementsByClassName('k-number')[0].value, this.getElementsByClassName('password')[0].value)">
             <div class="imgcontainer">
                 <img src="../images/default_avatar.png" alt="Avatar" class="avatar">
             </div>
 
             <div class="container">
                 <label><b>k-Nummer</b></label>
-                <input type="text" placeholder="z.B. k12345" name="k-number" required>
+                <input type="text" placeholder="z.B. k12345" name="k-number" class="k-number" required>
 
                 <label><b>Kennwort</b></label>
-                <input type="password" placeholder="Kennwort" name="password" required>
+                <input type="password" placeholder="Kennwort" name="password" class="password" required>
 
                 <button type="submit">Anmelden</button>
-                <input type="checkbox" checked="checked"> Eingeloggt bleiben
+                <input title="keep_logged_in" type="checkbox" checked="checked"> Eingeloggt bleiben
             </div>
 
             <div class="container" style="background-color:#f1f1f1">
@@ -88,7 +89,7 @@
 
     <script>
         Polymer({
-            is: 'my-login',
+            is: 'my-login'
         });
     </script>
 </dom-module>
