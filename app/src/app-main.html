@@ -21,7 +21,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="my-icons.html">
+<link rel="import" href="app-icons.html">
 
 <dom-module id="app-main">
     <template>
@@ -172,11 +172,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         attr-for-selected="name"
                         fallback-selection="view404"
                         role="main">
-                    <my-home name="home"></my-home>
-                    <my-browse name="browse"></my-browse>
-                    <my-new-entry name="new-entry"></my-new-entry>
-                    <my-login name="login"></my-login>
-                    <my-error404 name="error404"></my-error404>
+                    <app-home name="home"></app-home>
+                    <app-browse name="browse"></app-browse>
+                    <app-new-entry name="new-entry"></app-new-entry>
+                    <app-login name="login"></app-login>
+                    <app-error404 name="error404"></app-error404>
                 </iron-pages>
             </app-header-layout>
         </app-drawer-layout>
@@ -209,7 +209,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             _pageChanged: function(page) {
                 // Load page import on demand. Show 404 page if fails
-                var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
+                var resolvedPageUrl = this.resolveUrl('app-' + page + '.html');
                 this.importHref(resolvedPageUrl, null, this._showPage404, true);
             },
 
