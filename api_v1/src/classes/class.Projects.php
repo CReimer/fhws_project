@@ -20,9 +20,11 @@ class Projects {
     public function getProjects() {
 
         $sql = <<<SQL
-SELECT name FROM projects
+SELECT * FROM projects
+WHERE deleted IS NOT TRUE 
 SQL;
         $sth = $this->dbh->prepare($sql);
+        $sth->execute();
         return json_encode($sth->fetchAll());
     }
 
