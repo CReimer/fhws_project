@@ -60,11 +60,16 @@ SQL;
         }
 
         $sql = <<<SQL
-        INSERT INTO `users` (`cn`) VALUES (:cn);
+        INSERT INTO `users` (`cn`, `role`) VALUES (:cn, :role);
 SQL;
 
         $sth = $this->dbh->prepare($sql);
         $sth->bindParam(':cn', $encoded_data->cn);
+        $role = 0;
+        if ($encoded_data->role == 'mitarbeiter') {
+            $role = 1;
+        }
+        $sth->bindParam(':role', $role);
         $sth->execute();
     }
 

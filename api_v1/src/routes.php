@@ -13,6 +13,14 @@ $app->post('/projects', function ($request, $response, $args) {
     $jwtToken = $request->getHeaderLine('authorization');
     $userObj = new User($jwtToken);
 
+    if (!$userObj) {
+        $response
+            ->withStatus(550)
+            ->withHeader('Content-Type', 'text/html')
+            ->write('User not logged in');
+        return false;
+    }
+
 
     $projectsObj = new Projects();
     echo $projectsObj->newProject($request->getParsedBody());
@@ -32,6 +40,7 @@ $app->get('/projects/[{id}]', function ($request, $response, $args) {
     $projectsObj = new Projects();
     echo $projectsObj->getProjectById($args['id']);
 });
+
 $app->delete('/projects/[{id}]', function ($request, $response, $args) {
     $projectsObj = new Projects();
     echo $projectsObj->delProjectById($args['id']);

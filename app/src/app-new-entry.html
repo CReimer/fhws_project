@@ -1,4 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<script src="js/app-new-entry.js"></script>
 
 <dom-module id="app-new-entry">
     <template>
@@ -42,14 +43,14 @@
         </style>
 
         <div class="form">
-            <form action="">
+            <form onsubmit="event.preventDefault(); newEntrySubmit(this)">
                 <div class="container">
                     <h1>Neuer Eintrag</h1>
                     <label><b>Projekttitel</b></label>
-                    <input type="text" name="title" required>
+                    <input type="text" name="title" class="title" required>
 
                     <label><b>Beschreibung</b></label>
-                    <textarea name="description" required></textarea>
+                    <textarea name="description" class="description" required></textarea>
                 </div>
 
                 <div class="container" style="background-color:#f1f1f1">
