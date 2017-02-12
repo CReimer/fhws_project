@@ -1,4 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="app-browse">
@@ -7,95 +8,74 @@
       :host {
         display: block;
 
-        padding: 10px;
-      }
+                padding: 10px;
+            }
 
-      .search-elements {
-        margin: 0px 24px;
-        padding: 16px;
-        color: #757575;
-        border-radius: 5px;
-        background-color: #fff;
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-      }
+            .search-elements {
+                margin: 0 24px;
+                padding: 16px;
+                color: #757575;
+                border-radius: 5px;
+                background-color: #fff;
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+            }
 
-      input[type=text] {
-        width: 70%;
-        box-sizing: border-box;
-        border: 2px solid #ccc;
-        border-radius: 4px;
-        font-size: 16px;
-        background-color: white;
-        background-image: url('../images/search_icon.png');
-        background-position: 10px 10px;
-        background-repeat: no-repeat;
-        padding: 12px 20px 12px 40px;
-        -webkit-transition: width 0.4s ease-in-out;
-        transition: width 0.4s ease-in-out;
-      }
+            input[type=text] {
+                width: 70%;
+                box-sizing: border-box;
+                border: 2px solid #ccc;
+                border-radius: 4px;
+                font-size: 16px;
+                background: white url('../images/search_icon.png') no-repeat 10px 10px;
+                padding: 12px 20px 12px 40px;
+                -webkit-transition: width 0.4s ease-in-out;
+                transition: width 0.4s ease-in-out;
+            }
 
+            .button {
+                background-color: var(--app-primary-color);
+                color: white;
+                margin: 8px 0;
+                border: none;
+                cursor: pointer;
+                width: auto;
+                padding: 10px 18px;
+            }
 
-      .button {
-        background-color: var(--app-primary-color);
-        color: white;
-        margin: 8px 0;
-        border: none;
-        cursor: pointer;
-        width: auto;
-        padding: 10px 18px;
-      }
+        </style>
 
-    </style>
+        <div class="search-elements">
+            <form onsubmit="event.preventDefault(); getEntries()">
+                <input type="text" name="search" placeholder="Suchbegriff">
+                <button type="submit" class="button">Aktualisieren</button>
+                <br>
+                Typ:
+                <input type="checkbox" value="Projekt" checked>Projektarbeit
+                <input type="checkbox" value="Bachelor" checked>Bachelorarbeit
+                <input type="checkbox" value="Master" checked>Masterarbeit
+            </form>
 
-    <div class="search-elements">
-      <input type="text" name="search" placeholder="Suchbegriff">
-      <button class="button">Aktualisieren</button>
-      <form>
-        Typ:
-        <input type="checkbox" value="Projekt" checked>Projektarbeit
-        <input type="checkbox" value="Bachelor" checked>Bachelorarbeit
-        <input type="checkbox" value="Master" checked>Masterarbeit
-      </form>
-      Studiengang:
-      <select>
-        <option value="all">Alle</option>
-        <option value="inf">Informatik</option>
-        <option value="wInf">Wirtschaftsinformatik</option>
-        <option value="EC">E-Commerce</option>
-      </select>
+        </div>
 
-    </div>
-    <div class="entry">
-      <div class="circle">Inf</div>
-      <div class="circle">WInf</div>
+        <template is="dom-repeat" items="[[projects]]">
+            <div class="entry">
+                <div class="circle">Inf</div>
+                <div class="circle">WInf</div>
 
-      <h1>Projekttitel (Titel sind in der Regel viel länger)</h1>
-      <p><b>Status</b>: offen<br/>
-        <b>Dozent</b>: Prof. Dr. John</p>
-      <a href="/detail/1">Mehr Details</a>
-    </div>
-    <div class="entry">
-      <div class="circle">WInf</div>
-      <div class="circle">EC</div>
-      <h1>Bachelorarbeit</h1>
-      <p><b>Status</b>: abgeschlossen<br/>
-        <b>Dozent</b>: Prof. Dr. Junker-Schilling</p>
-      <a href="/detail/2">Mehr Details</a>
-    </div>
-    <div class="entry">
-      <div class="circle">Inf</div>
-      <div class="circle">WInf</div>
-      <div class="circle">EC</div>
-      <h1>Masterarbeit</h1>
-      <p><b>Status</b>: In Bearbeitung<br/>
-        <b>Dozent</b>: Prof. Dr. Heinzl</p>
-      <a href="/detail/3">Mehr Details</a>
-    </div>
-  </template>
+                <h1>{{item.name}}</h1>
+                <p>{{item.description}}</p>
+                <!--<p>Hier könnte noch was anderes stehen.</p>-->
+                <a href="#">Mehr Details</a>
+            </div>
+        </template>
 
-  <script>
-    Polymer({
-      is: 'app-browse'
-    });
-  </script>
+        <iron-ajax
+                id="requestProjects"
+                url="../../api_v1/index.php/projects"
+                params='{"type":"all"}'
+                handle-as="json"
+                on-response="handleResponse">
+        </iron-ajax>
+    </template>
+    <script src="js/app-browse.js"></script>
 </dom-module>
