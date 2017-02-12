@@ -15,15 +15,11 @@ class Projects {
     public function __construct() {
         $databaseObj = new Database();
         $this->dbh = $databaseObj->getPdo();
-    }
-
-    public function getProjects() {
-
-        $sql = <<<SQL
+        $this->getProjectBaseSql = <<<SQL
 SELECT
   projects.name                    AS name,
   projects.description             AS description,
-  GROUP_CONCAT(degreeProgram.name) AS degreeName,
+  GROUP_CONCAT(degreeProgram.short_name) AS degreeName,
   types.name                       AS type,
   GROUP_CONCAT(DISTINCT users.cn)  AS cn
 FROM projects
@@ -38,16 +34,30 @@ FROM projects
   LEFT JOIN users
     ON users_projects.user_id = users.id
 WHERE deleted <> 1
-GROUP BY projects.id
 SQL;
-        $sth = $this->dbh->prepare($sql);
-        $sth->execute();
-        $data = $sth->fetchAll(PDO::FETCH_ASSOC);
+        $this->getProjectBaseSqlFooter = "GROUP BY projects.id";
+    }
+
+    private function postProcessGetProjectsResults($data) {
         foreach ($data as &$single) {
-            $single['degreeName'] = explode(',', $single['degreeName']);
+            $temp = explode(',', $single['degreeName']);
+            $single['degreeName'] = array();
+            foreach ($temp as $degree) {
+                $single['degreeName'][$degree] = true;
+            }
             $single['cn'] = explode(',', $single['cn']);
         }
-        return json_encode($data);
+        return $data;
+    }
+
+    public function getProjects() {
+
+        $sql = $this->getProjectBaseSql;
+        $sql .= $this->getProjectBaseSqlFooter;
+        $sth = $this->dbh->prepare($sql);
+        $sth->execute();
+
+        return $this->postProcessGetProjectsResults($data = $sth->fetchAll(PDO::FETCH_ASSOC));
     }
 
     /**
@@ -55,33 +65,15 @@ SQL;
      * @return mixed
      */
     public function getProjectById($id) {
-        // Copy from getProjects() with additional WHERE
-        $sql = <<<SQL
-SELECT
-  projects.name                    AS name,
-  projects.description             AS description,
-  GROUP_CONCAT(degreeProgram.name) AS degreeName,
-  types.name                       AS type,
-  GROUP_CONCAT(DISTINCT users.cn)  AS cn
-FROM projects
-  LEFT JOIN projects_degreeProgram
-    ON projects_degreeProgram.project_id = projects.id
-  LEFT JOIN degreeProgram
-    ON degreeProgram.id = projects_degreeProgram.program_id
-  LEFT JOIN types
-    ON projects.type_id = types.id
-  LEFT JOIN users_projects
-    ON projects.id = users_projects.project_id
-  LEFT JOIN users
-    ON users_projects.user_id = users.id
-WHERE deleted <> 1
-  AND id = :id
-GROUP BY projects.id
+        $sql = $this->getProjectBaseSql;
+        $sql .= "AND id = :id";
+        $sql .= $this->getProjectBaseSqlFooter;
 
-SQL;
         $sth = $this->dbh->prepare($sql);
         $sth->bindParam(':id', $id);
-        return json_encode($sth->fetchAll(PDO::FETCH_ASSOC));
+        $sth->execute();
+
+        return $this->postProcessGetProjectsResults($data = $sth->fetchAll(PDO::FETCH_ASSOC));
     }
 
     /**
@@ -126,36 +118,25 @@ SQL;
         // Todo: May want to return complete object after patching
     }
 
-    public function searchProject($phrase) {
-        // Copy from getProjects() with additional WHERE
-        $sql = <<<SQL
-SELECT
-  projects.name                    AS name,
-  projects.description             AS description,
-  GROUP_CONCAT(degreeProgram.name) AS degreeName,
-  types.name                       AS type,
-  GROUP_CONCAT(DISTINCT users.cn)  AS cn
-FROM projects
-  LEFT JOIN projects_degreeProgram
-    ON projects_degreeProgram.project_id = projects.id
-  LEFT JOIN degreeProgram
-    ON degreeProgram.id = projects_degreeProgram.program_id
-  LEFT JOIN types
-    ON projects.type_id = types.id
-  LEFT JOIN users_projects
-    ON projects.id = users_projects.project_id
-  LEFT JOIN users
-    ON users_projects.user_id = users.id
-WHERE deleted <> 1
-AND name LIKE :phrase
-OR projects.description LIKE :phrase
-SQL;
+    public function searchProject($params) {
+        $sql = $this->getProjectBaseSql;
+        if ($params['projekt'] == 'on') {
+            $sql .= "OR types.selector = 'projekt'\n";
+        }
+        if ($params['bachelor'] == 'on') {
+            $sql .= "OR types.selector = 'bachelor'\n";
+        }
+        if ($params['master'] == 'on') {
+            $sql .= "OR types.selector = 'master'\n";
+        }
+        $sql .= $this->getProjectBaseSqlFooter;
+
         $sth = $this->dbh->prepare($sql);
-        $phrase = '%' . $phrase . '%';
+        $phrase = '%' . $params['phrase'] . '%';
         $sth->bindParam(':phrase', $phrase);
         $sth->execute();
-        return json_encode($sth->fetchAll(PDO::FETCH_ASSOC));
 
+        return $this->postProcessGetProjectsResults($data = $sth->fetchAll(PDO::FETCH_ASSOC));
     }
 
     public function getPossibleStatuses() {

@@ -7,7 +7,7 @@ require_once 'classes/class.Filemanager.php';
 
 $app->get('/projects', function () {
     $projectsObj = new Projects();
-    echo $projectsObj->getProjects();
+    echo json_encode($projectsObj->getProjects());
 });
 $app->post('/projects', function ($request, $response, $args) {
     $jwtToken = $request->getHeaderLine('authorization');
@@ -47,7 +47,7 @@ $app->delete('/projects/[{id}]', function ($request, $response, $args) {
 });
 $app->patch('/projects[{id}]', function ($request, $response, $args) {
     $projectsObj = new Projects();
-    echo $projectsObj->patchProjectById($args['id'], $request->getParsedBody());
+    echo json_encode($projectsObj->patchProjectById($args['id'], $request->getParsedBody()));
 });
 
 
@@ -77,5 +77,5 @@ $app->post('/files', function ($request, $response, $args) {
 
 $app->get('/search/projects', function ($request, $response, $args) {
     $projectsObj = new Projects();
-    echo $projectsObj->searchProject($_GET);
+    echo json_encode($projectsObj->searchProject($_GET));
 });
