@@ -1,0 +1,57 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+
+<dom-module id="app-detail">
+    <style include="shared-styles">
+        :host {
+            display: block;
+
+            padding: 10px;
+        }
+
+        .entry a{
+            display: block;
+            padding: 0 16px;
+            color: black;
+            text-decoration: none;
+            line-height: 40px;
+            position: relative;
+        }
+    </style>
+
+    <template>
+        <!-- Folgendes app-route hat momentan noch keine Funktion, aber die Details
+         sollen z.B. in der Form "../detail/15021 erscheinen, wobei 15021 die ID ist -->
+        <app-route
+                route="[[route]]"
+                pattern="/:id"
+                data="{{routeData}}">
+        </app-route>
+
+        <div class="entry">
+            <a name="browse" href="/browse">
+                <iron-icon icon="arrow-back"></iron-icon>
+                <span>Zurück</span>
+            </a>
+            <div class="circle">Inf</div>
+            <div class="circle">WInf</div>
+            <h1>Hier steht der Titel</h1>
+            <div class="description">
+                <h2>Beschreibung</h2>
+                <p id="desc">Hier steht ganz ausführlich um was es im Projekt geht.
+                    Rhabarber rhabarber rhabarber rhabarber rhabarber rhabarber
+                    rhabarber rhabarber rhabarber rhabarber rhabarber rhabarber
+                    rhabarber rhabarber rhabarber rhabarber rhabarber rhabarber
+                    rhabarber rhabarber rhabarber rhabarber rhabarber rhabarber
+                    rhabarber rhabarber rhabarber rhabarber rhabarber rhabarber.</p>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'app-detail'
+        });
+    </script>
+</dom-module>

@@ -5,10 +5,6 @@
 <dom-module id="app-login">
     <template>
         <style>
-            form {
-                border: 3px solid #f1f1f1;
-            }
-
             input[type=text], input[type=password] {
                 width: 100%;
                 padding: 12px 20px;
@@ -28,12 +24,6 @@
                 width: 100%;
             }
 
-            .cancelbtn {
-                width: auto;
-                padding: 10px 18px;
-                background-color: grey;
-            }
-
             .imgcontainer {
                 text-align: center;
                 margin: 24px 0 12px 0;
@@ -45,23 +35,10 @@
             }
 
             .container {
+                border: 3px solid lightgray;
+                margin: auto;
                 padding: 16px;
-            }
-
-            span.psw {
-                float: right;
-                padding-top: 16px;
-            }
-
-            @media screen and (max-width: 300px) {
-                span.psw {
-                    display: block;
-                    float: none;
-                }
-
-                .cancelbtn {
-                    width: 100%;
-                }
+                width: 310px;
             }
         </style>
         <form onsubmit="event.preventDefault(); loginSubmit(this.getElementsByClassName('k-number')[0].value, this.getElementsByClassName('password')[0].value)">
@@ -77,12 +54,6 @@
                 <input type="password" placeholder="Kennwort" name="password" class="password" required>
 
                 <button type="submit">Anmelden</button>
-                <input title="keep_logged_in" type="checkbox" checked="checked"> Eingeloggt bleiben
-            </div>
-
-            <div class="container" style="background-color:#f1f1f1">
-                <button type="button" class="cancelbtn">Abbrechen</button>
-                <span class="psw"><a href="#">Passwort</a> vergessen?</span>
             </div>
         </form>
     </template>
