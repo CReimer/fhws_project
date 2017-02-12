@@ -1,6 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="shared-styles.html">
-<script src="js/app-browse.js"></script>
 
 <dom-module id="app-browse">
     <template>
@@ -56,37 +56,26 @@
             </form>
 
         </div>
-        <div class="entry" id="empty-entry">
-            <div class="circle">Inf</div>
-            <div class="circle">WInf</div>
 
-            <h1>Projekttitel</h1>
-            <p>Hier könnte ein Objekt angezeigt werden.</p>
-            <p>Hier könnte noch was anderes stehen.</p>
-            <a href="#">Mehr Details</a>
-        </div>
-        <!--<div class="entry">-->
-        <!--<div class="circle">WInf</div>-->
-        <!--<div class="circle">EC</div>-->
-        <!--<h1>Bachelorarbeit</h1>-->
-        <!--<p>Hier könnte ein Objekt angezeigt werden.</p>-->
-        <!--<p>Hier könnte noch was anderes stehen.</p>-->
-        <!--<a href="#">Mehr Details</a>-->
-        <!--</div>-->
-        <!--<div class="entry">-->
-        <!--<div class="circle">Inf</div>-->
-        <!--<div class="circle">WInf</div>-->
-        <!--<div class="circle">EC</div>-->
-        <!--<h1>Masterarbeit</h1>-->
-        <!--<p>Hier könnte ein Objekt angezeigt werden.</p>-->
-        <!--<p>Hier könnte noch was anderes stehen.</p>-->
-        <!--<a href="#">Mehr Details</a>-->
-        <!--</div>-->
+        <template is="dom-repeat" items="[[projects]]">
+            <div class="entry">
+                <div class="circle">Inf</div>
+                <div class="circle">WInf</div>
+
+                <h1>{{item.name}}</h1>
+                <p>{{item.description}}</p>
+                <!--<p>Hier könnte noch was anderes stehen.</p>-->
+                <a href="#">Mehr Details</a>
+            </div>
+        </template>
+
+        <iron-ajax
+                id="requestProjects"
+                url="../../api_v1/index.php/projects"
+                params='{"type":"all"}'
+                handle-as="json"
+                on-response="handleResponse">
+        </iron-ajax>
     </template>
-
-    <script>
-//        Polymer({
-//            is: 'app-browse'
-//        });
-    </script>
+    <script src="js/app-browse.js"></script>
 </dom-module>
