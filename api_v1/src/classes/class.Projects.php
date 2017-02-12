@@ -55,9 +55,29 @@ SQL;
      * @return mixed
      */
     public function getProjectById($id) {
+        // Copy from getProjects() with additional WHERE
         $sql = <<<SQL
-SELECT * FROM projects
-WHERE id = :id
+SELECT
+  projects.name                    AS name,
+  projects.description             AS description,
+  GROUP_CONCAT(degreeProgram.name) AS degreeName,
+  types.name                       AS type,
+  GROUP_CONCAT(DISTINCT users.cn)  AS cn
+FROM projects
+  LEFT JOIN projects_degreeProgram
+    ON projects_degreeProgram.project_id = projects.id
+  LEFT JOIN degreeProgram
+    ON degreeProgram.id = projects_degreeProgram.program_id
+  LEFT JOIN types
+    ON projects.type_id = types.id
+  LEFT JOIN users_projects
+    ON projects.id = users_projects.project_id
+  LEFT JOIN users
+    ON users_projects.user_id = users.id
+WHERE deleted <> 1
+  AND id = :id
+GROUP BY projects.id
+
 SQL;
         $sth = $this->dbh->prepare($sql);
         $sth->bindParam(':id', $id);
@@ -107,8 +127,25 @@ SQL;
     }
 
     public function searchProject($phrase) {
+        // Copy from getProjects() with additional WHERE
         $sql = <<<SQL
-SELECT * FROM projects
+SELECT
+  projects.name                    AS name,
+  projects.description             AS description,
+  GROUP_CONCAT(degreeProgram.name) AS degreeName,
+  types.name                       AS type,
+  GROUP_CONCAT(DISTINCT users.cn)  AS cn
+FROM projects
+  LEFT JOIN projects_degreeProgram
+    ON projects_degreeProgram.project_id = projects.id
+  LEFT JOIN degreeProgram
+    ON degreeProgram.id = projects_degreeProgram.program_id
+  LEFT JOIN types
+    ON projects.type_id = types.id
+  LEFT JOIN users_projects
+    ON projects.id = users_projects.project_id
+  LEFT JOIN users
+    ON users_projects.user_id = users.id
 WHERE deleted <> 1
 AND name LIKE :phrase
 OR projects.description LIKE :phrase
@@ -126,7 +163,6 @@ SQL;
 SELECT * FROM project_status
 SQL;
         $sth = $this->dbh->prepare($sql);
-        $sth->bindParam(':id', $id);
         $sth->execute();
         return json_encode($sth->fetchAll(PDO::FETCH_ASSOC));
     }
