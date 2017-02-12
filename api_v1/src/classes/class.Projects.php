@@ -25,7 +25,7 @@ WHERE deleted IS NOT TRUE
 SQL;
         $sth = $this->dbh->prepare($sql);
         $sth->execute();
-        return json_encode($sth->fetchAll());
+        return json_encode($sth->fetchAll(PDO::FETCH_ASSOC));
     }
 
     /**
@@ -86,14 +86,16 @@ SQL;
 
     public function searchProject($phrase) {
         $sql = <<<SQL
-SELECT name FROM projects
-WHERE deleted = 0
-AND name LIKE '%:phrase%'
-OR projects.description LIKE '%:phrase%'
+SELECT * FROM projects
+WHERE deleted <> 1
+AND name LIKE :phrase
+OR projects.description LIKE :phrase
 SQL;
         $sth = $this->dbh->prepare($sql);
+        $phrase = '%' . $phrase . '%';
         $sth->bindParam(':phrase', $phrase);
-        return json_encode($sth->fetchAll());
+        $sth->execute();
+        return json_encode($sth->fetchAll(PDO::FETCH_ASSOC));
 
     }
 
