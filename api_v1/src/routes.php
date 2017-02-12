@@ -77,5 +77,5 @@ $app->post('/files', function ($request, $response, $args) {
 
 $app->get('/search/projects', function ($request, $response, $args) {
     $projectsObj = new Projects();
-    echo $projectsObj->searchProject($args['phrase']);
+    echo $projectsObj->searchProject($_GET['phrase']);
 });

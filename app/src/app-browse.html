@@ -1,5 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="app-browse">
@@ -45,9 +46,9 @@
         </style>
 
         <div class="search-elements">
-            <form onsubmit="event.preventDefault(); getEntries()">
-                <input type="text" name="search" placeholder="Suchbegriff">
-                <button type="submit" class="button">Aktualisieren</button>
+            <form is="iron-form" method="get" on-iron-form-response="handleResponse" action="../../api_v1/index.php/search/projects">
+                <input type="text" name="phrase" placeholder="Suchbegriff">
+                <button class="button">Aktualisieren</button>
                 <br>
                 Typ:
                 <input type="checkbox" value="Projekt" checked>Projektarbeit
