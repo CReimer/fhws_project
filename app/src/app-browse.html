@@ -4,10 +4,10 @@
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="app-browse">
-  <template>
-    <style include="shared-styles">
-      :host {
-        display: block;
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
 
                 padding: 10px;
             }
@@ -46,22 +46,24 @@
         </style>
 
         <div class="search-elements">
-            <form is="iron-form" method="get" on-iron-form-response="handleResponse" action="../../api_v1/index.php/search/projects">
+            <form id="search-form" is="iron-form" method="get" on-iron-form-response="handleResponse"
+                  action="../../api_v1/index.php/search/projects">
                 <input type="text" name="phrase" placeholder="Suchbegriff">
                 <button class="button">Aktualisieren</button>
                 <br>
                 Typ:
-                <input type="checkbox" value="Projekt" checked>Projektarbeit
-                <input type="checkbox" value="Bachelor" checked>Bachelorarbeit
-                <input type="checkbox" value="Master" checked>Masterarbeit
+                <input name='projekt' type="checkbox" checked>Projektarbeit
+                <input name='bachelor' type="checkbox" checked>Bachelorarbeit
+                <input name='master' type="checkbox" checked>Masterarbeit
             </form>
 
         </div>
 
         <template is="dom-repeat" items="[[projects]]">
             <div class="entry">
-                <div class="circle">Inf</div>
-                <div class="circle">WInf</div>
+                <div hidden="{{!item.degreeName.Inf}}" class="circle">Inf</div>
+                <div hidden="{{!item.degreeName.WInf}}" class="circle">WInf</div>
+                <div hidden="{{!item.degreeName.EC}}" class="circle">EC</div>
 
                 <h1>{{item.name}}</h1>
                 <p>{{item.description}}</p>
