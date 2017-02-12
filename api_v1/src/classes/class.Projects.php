@@ -20,12 +20,34 @@ class Projects {
     public function getProjects() {
 
         $sql = <<<SQL
-SELECT * FROM projects
-WHERE deleted IS NOT TRUE 
+SELECT
+  projects.name                    AS name,
+  projects.description             AS description,
+  GROUP_CONCAT(degreeProgram.name) AS degreeName,
+  types.name                       AS type,
+  GROUP_CONCAT(DISTINCT users.cn)  AS cn
+FROM projects
+  LEFT JOIN projects_degreeProgram
+    ON projects_degreeProgram.project_id = projects.id
+  LEFT JOIN degreeProgram
+    ON degreeProgram.id = projects_degreeProgram.program_id
+  LEFT JOIN types
+    ON projects.type_id = types.id
+  LEFT JOIN users_projects
+    ON projects.id = users_projects.project_id
+  LEFT JOIN users
+    ON users_projects.user_id = users.id
+WHERE deleted <> 1
+GROUP BY projects.id
 SQL;
         $sth = $this->dbh->prepare($sql);
         $sth->execute();
-        return json_encode($sth->fetchAll(PDO::FETCH_ASSOC));
+        $data = $sth->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($data as &$single) {
+            $single['degreeName'] = explode(',', $single['degreeName']);
+            $single['cn'] = explode(',', $single['cn']);
+        }
+        return json_encode($data);
     }
 
     /**
@@ -111,7 +133,7 @@ SQL;
 
     public function getProjectStatusById($id) {
         $sql = <<<SQL
-SELECT project_status.name as status, project_status.id as id FROM `projects`
+SELECT project_status.name AS status, project_status.id AS id FROM `projects`
 INNER JOIN project_status
 ON projects.status=project_status.id
 WHERE projects.id = :id
