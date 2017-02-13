@@ -10,7 +10,7 @@
             padding: 10px;
         }
 
-        .entry a{
+        .entry a {
             display: block;
             padding: 0 16px;
             color: black;
@@ -21,37 +21,32 @@
     </style>
 
     <template>
-        <!-- Folgendes app-route hat momentan noch keine Funktion, aber die Details
-         sollen z.B. in der Form "../detail/15021 erscheinen, wobei 15021 die ID ist -->
-        <app-route
-                route="[[route]]"
-                pattern="/:id"
-                data="{{routeData}}">
-        </app-route>
+        <app-location route="{{route}}"></app-location>
 
-        <div class="entry">
-            <a name="browse" href="/browse">
-                <iron-icon icon="arrow-back"></iron-icon>
-                <span>Zurück</span>
-            </a>
-            <div class="circle">Inf</div>
-            <div class="circle">WInf</div>
-            <h1>Hier steht der Titel</h1>
-            <div class="description">
-                <h2>Beschreibung</h2>
-                <p id="desc">Hier steht ganz ausführlich um was es im Projekt geht.
-                    Rhabarber rhabarber rhabarber rhabarber rhabarber rhabarber
-                    rhabarber rhabarber rhabarber rhabarber rhabarber rhabarber
-                    rhabarber rhabarber rhabarber rhabarber rhabarber rhabarber
-                    rhabarber rhabarber rhabarber rhabarber rhabarber rhabarber
-                    rhabarber rhabarber rhabarber rhabarber rhabarber rhabarber.</p>
+        <iron-ajax
+                id="requestProjectById"
+                url="../../api_v1/index.php/projects"
+                params='{"type":"all"}'
+                handle-as="json"
+                on-response="handleResponse">
+        </iron-ajax>
+
+        <template is="dom-repeat" items="[[project]]">
+            <div class="entry">
+                <a name="browse" href="/browse">
+                    <iron-icon icon="arrow-back"></iron-icon>
+                    <span>Zurück</span>
+                </a>
+                <div hidden="{{!item.degreeName.Inf}}" class="circle">Inf</div>
+                <div hidden="{{!item.degreeName.WInf}}" class="circle">WInf</div>
+                <div hidden="{{!item.degreeName.EC}}" class="circle">EC</div>
+                <h1>{{item.name}}</h1>
+                <div class="description">
+                    <h2>Beschreibung</h2>
+                    <p id="desc">{{item.description}}</p>
+                </div>
             </div>
-        </div>
+        </template>
     </template>
-
-    <script>
-        Polymer({
-            is: 'app-detail'
-        });
-    </script>
+    <script src="js/app-detail.js"></script>
 </dom-module>

@@ -38,7 +38,7 @@ $app->get('/projects/{id}/status', function ($request, $response, $args) {
 
 $app->get('/projects/[{id}]', function ($request, $response, $args) {
     $projectsObj = new Projects();
-    echo $projectsObj->getProjectById($args['id']);
+    echo json_encode($projectsObj->getProjectById($args['id']));
 });
 
 $app->delete('/projects/[{id}]', function ($request, $response, $args) {

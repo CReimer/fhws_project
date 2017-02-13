@@ -17,6 +17,7 @@ class Projects {
         $this->dbh = $databaseObj->getPdo();
         $this->getProjectBaseSql = <<<SQL
 SELECT
+  projects.id                      AS id,
   projects.name                    AS name,
   projects.description             AS description,
   GROUP_CONCAT(degreeProgram.short_name) AS degreeName,
@@ -34,6 +35,7 @@ FROM projects
   LEFT JOIN users
     ON users_projects.user_id = users.id
 WHERE deleted <> 1
+
 SQL;
         $this->getProjectBaseSqlFooter = "GROUP BY projects.id";
     }
@@ -66,7 +68,7 @@ SQL;
      */
     public function getProjectById($id) {
         $sql = $this->getProjectBaseSql;
-        $sql .= "AND id = :id";
+        $sql .= "AND projects.id = :id\n";
         $sql .= $this->getProjectBaseSqlFooter;
 
         $sth = $this->dbh->prepare($sql);
