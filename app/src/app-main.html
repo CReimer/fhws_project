@@ -31,7 +31,7 @@
             }
 
             .button {
-                outline : none;
+                outline: none;
                 display: inline-block;
                 background-color: var(--app-primary-color);
                 border: none;
@@ -81,7 +81,7 @@
             }
 
             .drawer-head a {
-                outline : none;
+                outline: none;
             }
 
             .drawer-list {
@@ -142,10 +142,11 @@
                     <app-toolbar>
                         <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
                         <div main-title>Projects@FHWS</div>
-                            <button class="button" style="horiz-align: right; vertical-align: middle"
-                            onclick="location.href='/login';">
-                                <span>Anmelden</span>
-                            </button>
+                        <button class="button" style="horiz-align: right; vertical-align: middle">
+                            <a style="
+                                   text-decoration: none;
+                                   color: white" href="/login">Anmelden</a>
+                        </button>
                     </app-toolbar>
                 </app-header>
 
@@ -182,7 +183,7 @@
                 '_routePageChanged(routeData.page)',
             ],
 
-            _routePageChanged: function(page) {
+            _routePageChanged: function (page) {
                 this.page = page || 'home';
 
                 if (!this.$.drawer.persistent) {
@@ -190,13 +191,13 @@
                 }
             },
 
-            _pageChanged: function(page) {
+            _pageChanged: function (page) {
                 // Load page import on demand. Show 404 page if fails
                 var resolvedPageUrl = this.resolveUrl('app-' + page + '.html');
                 this.importHref(resolvedPageUrl, null, this._showPage404, true);
             },
 
-            _showPage404: function() {
+            _showPage404: function () {
                 this.page = 'error404';
             },
         });
