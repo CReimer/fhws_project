@@ -52,7 +52,7 @@ $app->patch('/projects[{id}]', function ($request, $response, $args) {
 
 
 $app->get('/login', function ($request, $response, $args) {
-    $loginObj = new Login($request);
+    $loginObj = new Login($request, $response);
     header("x-fhws-jwt-token: " . $loginObj->getJwtToken());
     echo $loginObj->getData();
 });

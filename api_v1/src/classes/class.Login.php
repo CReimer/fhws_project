@@ -27,7 +27,7 @@ class Login {
      * Login constructor.
      * @param $request
      */
-    public function __construct($request) {
+    public function __construct($request, $response) {
         $databaseObj = new Database();
         $this->dbh = $databaseObj->getPdo();
 
@@ -39,6 +39,15 @@ class Login {
                 'header' => "Authorization: $auth64"
             )
         );
+
+        if (!$auth64) {
+            $response
+                ->withStatus(403)
+                ->withHeader('Content-Type', 'text/html')
+                ->write('No Authorization header');
+            exit();
+        }
+
         $context = stream_context_create($opts);
 
         $this->data = file_get_contents('https://apistaging.fiw.fhws.de/auth/api/users/me', false, $context);
@@ -60,11 +69,13 @@ SQL;
         }
 
         $sql = <<<SQL
-        INSERT INTO `users` (`cn`, `role`) VALUES (:cn, :role);
+        INSERT INTO `users` (`cn`, `role`, `firstName`, `lastName`) VALUES (:cn, :role, :firstName, :lastName);
 SQL;
 
         $sth = $this->dbh->prepare($sql);
         $sth->bindParam(':cn', $encoded_data->cn);
+        $sth->bindParam(':firstName', $encoded_data->firstName);
+        $sth->bindParam(':lastName', $encoded_data->lastName);
         $role = 0;
         if ($encoded_data->role == 'mitarbeiter') {
             $role = 1;

@@ -17,12 +17,15 @@ class Projects {
         $this->dbh = $databaseObj->getPdo();
         $this->getProjectBaseSql = <<<SQL
 SELECT
-  projects.id                      AS id,
-  projects.name                    AS name,
-  projects.description             AS description,
+  projects.id                            AS id,
+  projects.name                          AS name,
+  projects.description                   AS description,
   GROUP_CONCAT(degreeProgram.short_name) AS degreeName,
-  types.name                       AS type,
-  GROUP_CONCAT(DISTINCT users.cn)  AS cn
+  types.name                             AS type,
+  GROUP_CONCAT(DISTINCT users.cn)        AS cn,
+  supervisor.firstName                   AS supervisor_firstName,
+  supervisor.lastName                    AS supervisor_lastName,
+  project_status.name                    AS status
 FROM projects
   LEFT JOIN projects_degreeProgram
     ON projects_degreeProgram.project_id = projects.id
@@ -34,6 +37,10 @@ FROM projects
     ON projects.id = users_projects.project_id
   LEFT JOIN users
     ON users_projects.user_id = users.id
+  LEFT JOIN users AS supervisor
+    ON projects.supervisor = users.id
+  LEFT JOIN project_status
+    ON projects.status = project_status.id
 WHERE deleted <> 1
 
 SQL;
