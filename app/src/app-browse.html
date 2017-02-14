@@ -8,21 +8,11 @@
         <style include="shared-styles">
             :host {
                 display: block;
-
                 padding: 10px;
             }
 
-            .search-elements {
-                margin: 0 24px;
-                padding: 16px;
-                color: #757575;
-                border-radius: 5px;
-                background-color: #fff;
-                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-            }
-
             input[type=text] {
-                width: 70%;
+                width: calc(100% - 150px);
                 box-sizing: border-box;
                 border: 2px solid #ccc;
                 border-radius: 4px;
@@ -33,19 +23,12 @@
                 transition: width 0.4s ease-in-out;
             }
 
-            .button {
-                background-color: var(--app-primary-color);
-                color: white;
-                margin: 8px 0;
-                border: none;
-                cursor: pointer;
-                width: auto;
-                padding: 10px 18px;
+             {
+                display: inline-block;
             }
-
         </style>
 
-        <div class="search-elements">
+        <div class="entry" style="margin: 0 24px">
             <form id="search-form" is="iron-form" method="get" on-iron-form-response="handleResponse"
                   action="../../api_v1/index.php/search/projects">
                 <input type="text" name="phrase" placeholder="Suchbegriff">
@@ -55,8 +38,15 @@
                 <input name='projekt' type="checkbox" checked>Projektarbeit
                 <input name='bachelor' type="checkbox" checked>Bachelorarbeit
                 <input name='master' type="checkbox" checked>Masterarbeit
+                </br>
+                Studiengang:
+                <select>
+                    <option value="all">Alle</option>
+                    <option value="inf">Informatik</option>
+                    <option value="wInf">Wirtschaftsinformatik</option>
+                    <option value="EC">E-Commerce</option>
+                </select>
             </form>
-
         </div>
 
         <template is="dom-repeat" items="[[projects]]">
@@ -64,13 +54,22 @@
                 <div hidden="{{!item.degreeName.Inf}}" class="circle">Inf</div>
                 <div hidden="{{!item.degreeName.WInf}}" class="circle">WInf</div>
                 <div hidden="{{!item.degreeName.EC}}" class="circle">EC</div>
-
                 <h1>{{item.name}}</h1>
                 <p>{{item.description}}</p>
-                <!--<p>Hier könnte noch was anderes stehen.</p>-->
-                <a href="/detail/{{item.id}}">Mehr Details</a>
+                <button href="/detail/{{item.id}}">Mehr Details</button>
             </div>
         </template>
+
+    <div class="entry">
+      <div class="circle">WInf</div>
+      <div class="circle">EC</div>
+      <h1>Bachelorarbeit</h1>
+      <p><b>Status</b>: abgeschlossen<br/>
+        <b>Dozent</b>: Prof. Dr. Junker-Schilling</p>
+      <button class="button" onclick="location.href='/detail';">
+        <span>Mehr Details</span>
+      </button>
+    </div>
 
         <iron-ajax
                 id="requestProjects"
