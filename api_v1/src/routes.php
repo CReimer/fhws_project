@@ -11,6 +11,9 @@ $app->get('/projects', function () {
 });
 $app->post('/projects', function ($request, $response, $args) {
     $jwtToken = $request->getHeaderLine('authorization');
+    if (!$jwtToken) {
+        exit;
+    }
     $userObj = new User($jwtToken);
 
     if (!$userObj) {
@@ -18,7 +21,7 @@ $app->post('/projects', function ($request, $response, $args) {
             ->withStatus(550)
             ->withHeader('Content-Type', 'text/html')
             ->write('User not logged in');
-        return false;
+        exit;
     }
 
 
@@ -45,7 +48,7 @@ $app->delete('/projects/[{id}]', function ($request, $response, $args) {
     $projectsObj = new Projects();
     echo $projectsObj->delProjectById($args['id']);
 });
-$app->patch('/projects[{id}]', function ($request, $response, $args) {
+$app->patch('/projects/[{id}]', function ($request, $response, $args) {
     $projectsObj = new Projects();
     echo json_encode($projectsObj->patchProjectById($args['id'], $request->getParsedBody()));
 });

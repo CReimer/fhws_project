@@ -90,6 +90,13 @@ SQL;
      * @return mixed
      */
     public function newProject($form) {
+        if (strlen($form['name']) > 50) {
+            exit; // TODO: Send decent error to Client
+        }
+        if (strlen($form['desc']) > 500) {
+            exit; // TODO: Send decent error to Client
+        }
+
         $sql = <<<SQL
 INSERT INTO projects (`name`, `description`)
 VALUES (:name, :desc)

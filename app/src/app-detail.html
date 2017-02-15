@@ -25,7 +25,6 @@
         <iron-ajax
                 id="requestProjectById"
                 url="../../api_v1/index.php/projects"
-                params='{"type":"all"}'
                 handle-as="json"
                 on-response="handleResponse">
         </iron-ajax>
@@ -40,7 +39,12 @@
                     <h2>Beschreibung</h2>
                     <p id="desc">{{item.description}}</p>
                 </div>
-                <button href="/browse">Zurück</button>
+                <button class="button">
+                    <a href="/browse">Zurück</a>
+                </button>
+                <button class="button">
+                    <a href="/edit/{{item.id}}">Editieren</a>
+                </button>
             </div>
         </template>
     </template>
