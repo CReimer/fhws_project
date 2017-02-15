@@ -200,8 +200,9 @@
                 tail="{{subroute}}"></app-route>
 
         <app-drawer-layout fullbleed>
+            <script src="js/app-login.js"></script>
             <paper-dialog id="loginDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" modal role="alertdialog">
-            <form onsubmit="event.preventDefault(); loginSubmit(this.getElementsByClassName('k-number')[0].value, this.getElementsByClassName('password')[0].value)">
+            <form id="loginform" is="iron-form">
                 <div class="imgcontainer">
                     <img src="../images/default_avatar.png" alt="Avatar" class="avatar">
                 </div>
@@ -215,7 +216,7 @@
 
                     <div class="clearfix">
                         <button id="loginClose" type="button" class="button" on-tap="toggleLoginDialog">Abbrechen</button>
-                        <button id="loginSubmit" type="submit" class="button">Anmelden</button>
+                        <button id="loginSubmit" type="button" class="button" on-tap="loginSubmit">Anmelden</button>
                     </div>
                 </div>
             </form>
@@ -234,7 +235,7 @@
                         <iron-icon class="icon" icon="search"></iron-icon>
                         <span>Durchsuchen</span>
                     </a>
-                    <a name="new-entry" href="/new-entry">
+                    <a name="new-entry" href="/edit">
                         <iron-icon class="icon" icon="add-circle-outline"></iron-icon>
                         <span>Eintrag hinzufügen</span>
                     </a>
@@ -263,7 +264,7 @@
                     <app-home name="home"></app-home>
                     <app-browse name="browse"></app-browse>
                     <app-detail name="detail" route="[[subroute]]"></app-detail>
-                    <app-new-entry name="new-entry"></app-new-entry>
+                    <app-edit name="edit"></app-edit>
                     <app-error404 name="error404"></app-error404>
                 </iron-pages>
             </app-header-layout>
@@ -271,43 +272,5 @@
 
     </template>
 
-    <script>
-        Polymer({
-            is: 'app-main',
-
-            properties: {
-                page: {
-                    type: String,
-                    reflectToAttribute: true,
-                    observer: '_pageChanged',
-                },
-            },
-
-            toggleLoginDialog: function() {
-                this.$.loginDialog.toggle();
-            },
-
-            observers: [
-                '_routePageChanged(routeData.page)',
-            ],
-
-            _routePageChanged: function(page) {
-                this.page = page || 'home';
-
-                if (!this.$.drawer.persistent) {
-                    this.$.drawer.close();
-                }
-            },
-
-            _pageChanged: function(page) {
-                // Load page import on demand. Show 404 page if fails
-                var resolvedPageUrl = this.resolveUrl('app-' + page + '.html');
-                this.importHref(resolvedPageUrl, null, this._showPage404, true);
-            },
-
-            _showPage404: function() {
-                this.page = 'error404';
-            },
-        });
-    </script>
+    <script src="js/app-main.js"></script>
 </dom-module>
