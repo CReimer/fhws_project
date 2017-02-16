@@ -16,7 +16,7 @@ $app->post('/projects', function ($request, $response, $args) {
     }
     $userObj = new User($jwtToken);
 
-    if (!$userObj) {
+    if (!$userObj->getUserInfo()) {
         $response
             ->withStatus(550)
             ->withHeader('Content-Type', 'text/html')
@@ -58,6 +58,12 @@ $app->get('/login', function ($request, $response, $args) {
     $loginObj = new Login($request, $response);
     header("x-fhws-jwt-token: " . $loginObj->getJwtToken());
     echo $loginObj->getData();
+});
+
+$app->get('/user/projects', function ($request, $response, $args) {
+    $jwtToken = $request->getHeaderLine('authorization');
+    $userObj = new User($jwtToken);
+    echo json_encode($userObj->getProjects());
 });
 
 $app->get('/user', function ($request, $response, $args) {

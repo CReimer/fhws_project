@@ -27,7 +27,7 @@ Polymer({
         console.log(data.detail.response);
         this.project = data.detail.response;
     },
-    handleTap: function() {
+    handleTap: function () {
         newEntrySubmit(this.$.projectForm);
     }
 
@@ -40,12 +40,44 @@ function newEntrySubmit(data) {
     var formData = new FormData();
     var name = data.getElementsByClassName('title')[0].value;
     var desc = data.getElementsByClassName('description')[0].value;
+    var contrib = data.getElementsByClassName('contributor')[0].value;
+
+    var type = [];
+    if (data.getElementsByClassName('projekt')[0].checked) {
+        type.push('projekt')
+    }
+    if (data.getElementsByClassName('bachelor')[0].checked) {
+        type.push('bachelor')
+    }
+    if (data.getElementsByClassName('master')[0].checked) {
+        type.push('master')
+    }
+
+    var program = [];
+
+    if (data.getElementsByClassName('inf')[0].checked) {
+        program.push('inf')
+    }
+    if (data.getElementsByClassName('wInf')[0].checked) {
+        program.push('winf')
+    }
+    if (data.getElementsByClassName('EC')[0].checked) {
+        program.push('EC')
+    }
+
+    var status = data.getElementsByClassName('status')[0].value;
+
     if (!name || !desc) {
         return
     }
 
     formData.append('name', name);
     formData.append('desc', desc);
+    formData.append('contributor', contrib);
+    formData.append('type', type);
+    formData.append('program', program);
+    formData.append('status', status);
+
 
     console.log(formData);
     xhr.onreadystatechange = function () {
@@ -61,7 +93,7 @@ function newEntrySubmit(data) {
         xhr.open("POST", "../api_v1/index.php/projects");
     }
 
-    // xhr.setRequestHeader("Authorization", "Bearer " + jwt_token);
+    xhr.setRequestHeader("Authorization", "Bearer " + jwt_token);
     xhr.send(formData);
 }
 

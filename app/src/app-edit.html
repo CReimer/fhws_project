@@ -43,23 +43,23 @@
                                   required></textarea>
 
                         <label><b>Teilnehmer</b></label>
-                        <input type="text" name="contributer" class="contributer" maxlength="80" value="{{item.contributer}}"></br></br>
+                        <input type="text" name="contributor" class="contributor" maxlength="80" value="{{item.contributer}}"></br></br>
 
                         <div class="container" style="border: solid; border-color: lightgray; border-width: 1px">
                             <label><b>Typ:&nbsp;</b></label>
-                            <a class="block"><input name='projekt' type="checkbox" checked>Projektarbeit</a>
-                            <a class="block"><input name='bachelor' type="checkbox" checked>Bachelorarbeit</a>
-                            <a class="block"><input name='master' type="checkbox" checked>Masterarbeit</a>
+                            <a class="block"><input name='projekt' class="projekt" type="checkbox" checked>Projektarbeit</a>
+                            <a class="block"><input name='bachelor' class="bachelor" type="checkbox" checked>Bachelorarbeit</a>
+                            <a class="block"><input name='master' class="master" type="checkbox" checked>Masterarbeit</a>
                             </br>
 
                             <label><b>Studiengang:&nbsp;</b></label>
-                            <a class="block"><input name='inf' type="checkbox" checked>Informatik</a>
-                            <a class="block"><input name='wInf' type="checkbox" checked>Wirtschaftsinformatik</a>
-                            <a class="block"><input name='EC' type="checkbox" checked>E-Commerce</a>
+                            <a class="block"><input name='inf' class="inf" type="checkbox" checked>Informatik</a>
+                            <a class="block"><input name='wInf' class="wInf" type="checkbox" checked>Wirtschaftsinformatik</a>
+                            <a class="block"><input name='EC' class="EC" type="checkbox" checked>E-Commerce</a>
                             </br>
 
                             <label><b>Status:&nbsp;&nbsp;</b></label>
-                            <select>
+                            <select class="status">
                                 <option value="open">Offen</option>
                                 <option value="inProgress">In Bearbeitung</option>
                                 <option value="completed">Abgeschlossen</option>

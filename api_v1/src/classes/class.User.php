@@ -6,6 +6,8 @@
  * Date: 18.01.17
  * Time: 11:49
  */
+require_once "class.Projects.php";
+
 class User {
 
     /**
@@ -27,7 +29,7 @@ class User {
     }
 
     public function getUserInfo() {
-        return json_encode($this->data);
+        return $this->data;
     }
 
     public function getUserInfoById($id) {
@@ -54,5 +56,10 @@ SQL;
             return true;
         }
         return false;
+    }
+
+    public function getProjects() {
+        $projectsObj = new Projects();
+        return $projectsObj->getProjectsBySupervisorId($this->data['cn']);
     }
 }
