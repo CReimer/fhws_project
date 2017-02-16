@@ -22,13 +22,9 @@
                 -webkit-transition: width 0.4s ease-in-out;
                 transition: width 0.4s ease-in-out;
             }
-
-            .block {
-                display: inline-block;
-            }
         </style>
 
-        <div class="entry" style="margin: 0 24px; background-color: #f2f2f2">
+        <div class="entry" style="margin: 0 24px; border: solid; border-color: lightgray; border-width: 1px">
             <form id="search-form" is="iron-form" method="get" on-iron-form-response="handleResponse"
                   action="../../api_v1/index.php/search/projects">
                 <input type="text" name="phrase" placeholder="Suchbegriff">
