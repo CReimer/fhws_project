@@ -69,7 +69,7 @@ $app->get('/user/projects', function ($request, $response, $args) {
 $app->get('/user', function ($request, $response, $args) {
     $jwtToken = $request->getHeaderLine('authorization');
     $userObj = new User($jwtToken);
-    echo $userObj->getUserInfo();
+    echo json_encode($userObj->getUserInfo());
 });
 
 $app->get('/user/{id}', function ($request, $response, $args) {
