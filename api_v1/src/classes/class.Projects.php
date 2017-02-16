@@ -17,15 +17,18 @@ class Projects {
         $this->dbh = $databaseObj->getPdo();
         $this->getProjectBaseSql = <<<SQL
 SELECT
-  projects.id                            AS id,
-  projects.name                          AS name,
-  projects.description                   AS description,
-  GROUP_CONCAT(degreeProgram.short_name) AS degreeName,
-  types.name                             AS type,
-  GROUP_CONCAT(DISTINCT users.cn)        AS cn,
-  supervisor.firstName                   AS supervisor_firstName,
-  supervisor.lastName                    AS supervisor_lastName,
-  project_status.name                    AS status
+  projects.id                                                         AS id,
+  projects.name                                                       AS name,
+  projects.description                                                AS description,
+  projects.creation_date                                              AS creation_date,
+  GROUP_CONCAT(degreeProgram.short_name)                              AS degreeName,
+  types.name                                                          AS type,
+  GROUP_CONCAT(DISTINCT users.cn)                                     AS cn,
+  GROUP_CONCAT(DISTINCT CONCAT(users.firstName, ' ', users.lastName)) AS contributor,
+  supervisor.firstName                                                AS supervisor_firstName,
+  supervisor.lastName                                                 AS supervisor_lastName,
+  project_status.name                                                 AS status
+
 FROM projects
   LEFT JOIN projects_degreeProgram
     ON projects_degreeProgram.project_id = projects.id
@@ -38,7 +41,7 @@ FROM projects
   LEFT JOIN users
     ON users_projects.user_id = users.id
   LEFT JOIN users AS supervisor
-    ON projects.supervisor = users.id
+    ON projects.supervisor = supervisor.id
   LEFT JOIN project_status
     ON projects.status = project_status.id
 WHERE deleted <> 1
@@ -140,8 +143,7 @@ SQL;
         // Todo: May want to return complete object after patching
     }
 
-    public
-    function searchProject($params) {
+    public function searchProject($params) {
         $sql = $this->getProjectBaseSql;
         if ($params['projekt'] == 'on') {
             $sql .= "OR types.selector = 'projekt'\n";
@@ -162,8 +164,7 @@ SQL;
         return $this->postProcessGetProjectsResults($data = $sth->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    public
-    function getPossibleStatuses() {
+    public function getPossibleStatuses() {
         $sql = <<<SQL
 SELECT * FROM project_status
 SQL;
@@ -172,8 +173,7 @@ SQL;
         return json_encode($sth->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    public
-    function getProjectStatusById($id) {
+    public function getProjectStatusById($id) {
         $sql = <<<SQL
 SELECT project_status.name AS status, project_status.id AS id FROM `projects`
 INNER JOIN project_status
@@ -184,5 +184,17 @@ SQL;
         $sth->bindParam(':id', $id);
         $sth->execute();
         return json_encode($sth->fetchAll(PDO::FETCH_ASSOC));
+    }
+
+    public function getProjectsBySupervisorId($id) {
+        $sql = $this->getProjectBaseSql;
+        $sql .= "AND supervisor.cn = :id\n";
+        $sql .= $this->getProjectBaseSqlFooter;
+
+        $sth = $this->dbh->prepare($sql);
+        $sth->bindParam(':id', $id);
+        $sth->execute();
+
+        return $this->postProcessGetProjectsResults($data = $sth->fetchAll(PDO::FETCH_ASSOC));
     }
 }
