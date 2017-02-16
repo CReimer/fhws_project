@@ -31,8 +31,7 @@
 
 
         <div class="entry">
-            <form id="projectForm"
-                  action="../../api_v1/index.php/projects">
+            <form id="projectForm">
                 <template is="dom-repeat" items="[[project]]">
                     <div class="container">
                         <h1>Neuer Eintrag</h1>
@@ -40,12 +39,12 @@
                         <input type="text" name="name" class="title" maxlength="50" value="{{item.name}}" required>
 
                         <label><b>Beschreibung</b></label>
-                        <textarea name="desc" class="description" maxlength="500" value="{{item.desc}}"
+                        <textarea name="description" class="description" maxlength="500" value="{{item.description}}"
                                   required></textarea>
                     </div>
 
                     <div class="container" style="background-color:#f1f1f1">
-                        <button class="button" on-tap="handleTap">Abschicken</button>
+                        <button type="button" class="button" on-tap="handleTap">Abschicken</button>
                     </div>
                 </template>
             </form>

@@ -53,9 +53,9 @@ function newEntrySubmit(data) {
             console.log(xhr.response)
         }
     };
-    console.log(data.getElementsByClassName('title')[0].value)
+    console.log(data.getElementsByClassName('title')[0].value);
     if (window.location.pathname.split('/')[2]) {
-        xhr.open("PATCH", "../api_v1/index.php/projects/" + window.location.pathname.split('/')[2]);
+        xhr.open("POST", "../api_v1/index.php/projects/" + window.location.pathname.split('/')[2]);
     }
     else {
         xhr.open("POST", "../api_v1/index.php/projects");
@@ -65,6 +65,3 @@ function newEntrySubmit(data) {
     xhr.send(formData);
 }
 
-function _presubmit(e) {
-    console.log(e);
-}

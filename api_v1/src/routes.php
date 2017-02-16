@@ -48,7 +48,7 @@ $app->delete('/projects/[{id}]', function ($request, $response, $args) {
     $projectsObj = new Projects();
     echo $projectsObj->delProjectById($args['id']);
 });
-$app->patch('/projects/[{id}]', function ($request, $response, $args) {
+$app->post('/projects/[{id}]', function ($request, $response, $args) {
     $projectsObj = new Projects();
     echo json_encode($projectsObj->patchProjectById($args['id'], $request->getParsedBody()));
 });

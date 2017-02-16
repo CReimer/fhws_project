@@ -119,22 +119,29 @@ SQL;
         return true;
     }
 
-    public function patchProjectById($id, $data) {
-        foreach ($data as $single => $value) {
-            $sql = <<<SQL
-UPDATE projects SET :single = :value WHERE `projects`.`id` = :id
-SQL;
-            $sth = $this->dbh->prepare($sql);
-            $sth->bindParam(':id', $id);
-            $sth->bindParam(':single', $single);
-            $sth->bindParam(':value', $value);
-            $sth->execute();
+    public function patchProjectById($id, $form) {
+        if (strlen($form['name']) > 50) {
+            exit; // TODO: Send decent error to Client
         }
-        return true;
+        if (strlen($form['desc']) > 500) {
+            exit; // TODO: Send decent error to Client
+        }
+        $sql = <<<SQL
+UPDATE projects
+SET name = :name, description = :desc
+WHERE projects.id = :id
+SQL;
+        $sth = $this->dbh->prepare($sql);
+        $sth->bindParam(':name', $form['name']);
+        $sth->bindParam(':desc', $form['desc']);
+        $sth->bindParam(':id', $id);
+
+        $sth->execute();
         // Todo: May want to return complete object after patching
     }
 
-    public function searchProject($params) {
+    public
+    function searchProject($params) {
         $sql = $this->getProjectBaseSql;
         if ($params['projekt'] == 'on') {
             $sql .= "OR types.selector = 'projekt'\n";
@@ -155,7 +162,8 @@ SQL;
         return $this->postProcessGetProjectsResults($data = $sth->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    public function getPossibleStatuses() {
+    public
+    function getPossibleStatuses() {
         $sql = <<<SQL
 SELECT * FROM project_status
 SQL;
@@ -164,7 +172,8 @@ SQL;
         return json_encode($sth->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    public function getProjectStatusById($id) {
+    public
+    function getProjectStatusById($id) {
         $sql = <<<SQL
 SELECT project_status.name AS status, project_status.id AS id FROM `projects`
 INNER JOIN project_status
