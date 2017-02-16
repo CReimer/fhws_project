@@ -10,15 +10,6 @@
                 display: block;
                 padding: 10px;
             }
-
-            .entry a {
-                display: block;
-                padding: 0 16px;
-                color: black;
-                text-decoration: none;
-                line-height: 40px;
-                position: relative;
-            }
         </style>
 
         <app-location route="{{route}}"></app-location>
@@ -37,16 +28,24 @@
                 <h1>{{item.name}}</h1>
                 <div class="description">
                     <h2>Beschreibung</h2>
-                    <p id="desc">{{item.description}}</p>
+                    <p>{{item.description}}<br/>
+                    <b>Status</b>: {{item.status}}<br/>
+                        <b>Dozent</b>: {{item.supervisor_firstName}} {{item.supervisor_lastName}}<br/>
+                        <b>Teilnehmer</b>: {{item.contributer}}<br/>
+                        <b>Erstelldatum:</b> {{item.creation_date}}<br/>
+                        <b>Geeignet als</b>: {{item.type}}</p>
                 </div>
-                <button class="button">
-                    <a href="/browse">Zurück</a>
-                </button>
-                <button class="button">
-                    <a href="/edit/{{item.id}}">Editieren</a>
-                </button>
+                <a href="/browse" class="button">Zurück</a>
+                <a href="/edit/{{item.id}}" class="button">Editieren</a>
             </div>
         </template>
     </template>
+
     <script src="js/app-detail.js"></script>
+
+    <script>
+        Polymer({
+            is: 'app-detail'
+        });
+    </script>
 </dom-module>

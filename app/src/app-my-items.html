@@ -1,0 +1,40 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="app-my-items">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                padding: 10px;
+            }
+        </style>
+
+        <div class="entry" style="background-color: #f2f2f2">
+            <a href="/edit" class="button">
+                <iron-icon class="icon" icon="add-circle-outline"></iron-icon>
+                Neues Projekt</a>
+        </div>
+
+        <div class="entry">
+            <h1>Beispiel 1</h1>
+            <p><b>Status</b>: offen<br/>
+                <b>Erstell-Datum</b>: 15.02.2016</p>
+            <a href="/detail/{{item.id}}" class="button">Mehr Details</a>
+        </div>
+
+        <div class="entry">
+            <h1>Beispiel 2: Ein extra langer Titel, der wirklich, wirklich lang ist</h1>
+            <p><b>Status</b>: abgeschlossen<br/>
+                <b>Erstell-Datum</b>: 12.02.2016</p>
+            <a href="/detail/{{item.id}}" class="button">Mehr Details</a>
+        </div>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: 'app-my-items'
+        });
+    </script>
+</dom-module>

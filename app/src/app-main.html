@@ -154,7 +154,7 @@
             }
 
             #loginSubmit {
-                width:40%;
+                width: 40%;
                 float: right;
             }
 
@@ -235,9 +235,9 @@
                         <iron-icon class="icon" icon="search"></iron-icon>
                         <span>Durchsuchen</span>
                     </a>
-                    <a name="new-entry" href="/edit">
-                        <iron-icon class="icon" icon="add-circle-outline"></iron-icon>
-                        <span>Eintrag hinzufügen</span>
+                    <a name="my-items" href="/my-items">
+                        <iron-icon class="icon" icon="face"></iron-icon>
+                        <span>Meine Projekte</span>
                     </a>
 
 
@@ -265,6 +265,7 @@
                     <app-browse name="browse"></app-browse>
                     <app-detail name="detail" route="[[subroute]]"></app-detail>
                     <app-edit name="edit"></app-edit>
+                    <app-my-items name="my-items"></app-my-items>
                     <app-error404 name="error404"></app-error404>
                 </iron-pages>
             </app-header-layout>
@@ -273,4 +274,10 @@
     </template>
 
     <script src="js/app-main.js"></script>
+
+    <script>
+        Polymer({
+            is: 'app-main'
+        });
+    </script>
 </dom-module>

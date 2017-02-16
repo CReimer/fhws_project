@@ -1,4 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="shared-styles.html">
 <dom-module id="app-edit">
     <template>
@@ -29,7 +30,6 @@
 
         <app-location route="{{route}}"></app-location>
 
-
         <div class="entry">
             <form id="projectForm">
                 <template is="dom-repeat" items="[[project]]">
@@ -57,5 +57,12 @@
                 on-response="handleResponse">
         </iron-ajax>
     </template>
+
     <script src="js/app-edit.js"></script>
+
+    <script>
+        Polymer({
+            is: 'app-edit'
+        });
+    </script>
 </dom-module>
