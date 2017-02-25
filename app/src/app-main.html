@@ -199,28 +199,28 @@
                 data="{{routeData}}"
                 tail="{{subroute}}"></app-route>
 
-        <app-drawer-layout fullbleed>
+        <app-drawer-layout fullbleed responsive-width="1000px">
             <script src="js/app-login.js"></script>
             <paper-dialog id="loginDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" modal role="alertdialog">
-            <form id="loginform" is="iron-form">
-                <div class="imgcontainer">
-                    <img src="../images/default_avatar.png" alt="Avatar" class="avatar">
-                </div>
-
-                <div class="loginDialog container">
-                    <label><b>k-Nummer</b></label>
-                    <input type="text" placeholder="z.B. k12345" name="k-number" class="k-number login-inputs" required autofocus>
-
-                    <label><b>Kennwort</b></label>
-                    <input type="password" placeholder="Kennwort" name="password" class="password login-inputs" required>
-
-                    <div class="clearfix">
-                        <button id="loginClose" type="button" class="button" on-tap="toggleLoginDialog">Abbrechen</button>
-                        <button id="loginSubmit" type="button" class="button" on-tap="loginSubmit">Anmelden</button>
+                <form id="loginform" is="iron-form">
+                    <div class="imgcontainer">
+                        <img src="../images/default_avatar.png" alt="Avatar" class="avatar">
                     </div>
-                </div>
-            </form>
-        </paper-dialog>
+
+                    <div class="loginDialog container">
+                        <label><b>k-Nummer</b></label>
+                        <input type="text" placeholder="z.B. k12345" name="k-number" class="k-number login-inputs" required autofocus>
+
+                        <label><b>Kennwort</b></label>
+                        <input type="password" placeholder="Kennwort" name="password" class="password login-inputs" required>
+
+                        <div class="clearfix">
+                            <button id="loginClose" type="button" class="button" on-tap="toggleLoginDialog">Abbrechen</button>
+                            <button id="loginSubmit" type="button" class="button" on-tap="loginSubmit">Anmelden</button>
+                        </div>
+                    </div>
+                </form>
+            </paper-dialog>
 
             <app-drawer id="drawer">
                 <app-toolbar class="drawer-head">
@@ -239,8 +239,6 @@
                         <iron-icon class="icon" icon="face"></iron-icon>
                         <span>Meine Projekte</span>
                     </a>
-
-
                 </iron-selector>
             </app-drawer>
 
@@ -270,7 +268,6 @@
                 </iron-pages>
             </app-header-layout>
         </app-drawer-layout>
-
     </template>
     <script src="js/app-main.js"></script>
 </dom-module>

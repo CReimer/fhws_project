@@ -9,6 +9,9 @@ Polymer({
             type: Object
         }
     },
+    observers: [
+        '_viewChanged(routeData)'
+    ],
     ready: function () {
         if (this.route.path.split("/")[2]) {
             this.$.requestProjectById.url = this.$.requestProjectById.url + '/' + this.route.path.split("/")[2];
@@ -18,7 +21,7 @@ Polymer({
             this.project = [
                 {
                     name: "",
-                    desc: "",
+                    desc: ""
                 }
             ]
         }
@@ -29,6 +32,21 @@ Polymer({
     },
     handleTap: function () {
         newEntrySubmit(this.$.projectForm);
+    },
+    _viewChanged: function(routeData) {
+        var courseId = routeData.course_id;
+        if(!courseId) {
+            var loc = window.location.pathname;
+            var components = loc.split("/");
+            if(components.length !== 3 && components[1] !== "detail") return;
+            courseId = components[2];
+        }
+        if(!courseId) {
+            return;
+        }
+        var baseUrl = "/fhws_project/api_v1/index.php/projects";
+        this.$.requestProjectById.url = baseUrl + '/' + courseId;
+        this.$.requestProjectById.generateRequest();
     }
 
 });

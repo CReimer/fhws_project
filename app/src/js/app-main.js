@@ -10,6 +10,12 @@ Polymer({
             reflectToAttribute: true,
             observer: '_pageChanged',
         },
+
+        route: Object,
+
+        subroute: Object,
+
+        routeData: Object
     },
 
     toggleLoginDialog: function () {
@@ -18,6 +24,7 @@ Polymer({
 
     observers: [
         '_routePageChanged(routeData.page)',
+        '_updateItem(items, idData.id)'
     ],
 
     _routePageChanged: function (page) {
@@ -32,6 +39,10 @@ Polymer({
         // Load page import on demand. Show 404 page if fails
         var resolvedPageUrl = this.resolveUrl('app-' + page + '.html');
         this.importHref(resolvedPageUrl, null, this._showPage404, true);
+    },
+
+    _equal: function(value1, value2) {
+        return value1 === value2;
     },
 
     _showPage404: function () {

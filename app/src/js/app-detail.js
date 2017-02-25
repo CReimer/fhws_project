@@ -12,12 +12,26 @@ Polymer({
             type: Object
         }
     },
-    ready: function() {
-        this.$.requestProjectById.url = this.$.requestProjectById.url + '/' + this.route.path.replace(/\//g,'');
+    observers: [
+        '_viewChanged(routeData)'
+    ],
+    _viewChanged: function(routeData) {
+        var courseId = routeData.course_id;
+        if(!courseId) {
+            var loc = window.location.pathname;
+            var components = loc.split("/");
+            if(components.length !== 3 && components[1] !== "detail") return;
+            courseId = components[2];
+        }
+        if(!courseId) {
+            return;
+        }
+        var baseUrl = "/fhws_project/api_v1/index.php/projects";
+        this.$.requestProjectById.url = baseUrl + '/' + courseId;
         this.$.requestProjectById.generateRequest();
     },
     handleResponse: function(data) {
-        // console.log(data.detail.response);
         this.project = data.detail.response;
+        console.log(this.project);
     }
 });

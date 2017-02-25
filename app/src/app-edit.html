@@ -1,5 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="shared-styles.html">
 <dom-module id="app-edit">
     <template>
@@ -29,6 +31,10 @@
         </style>
 
         <app-location route="{{route}}"></app-location>
+        <app-route
+                route="{{route}}"
+                pattern="/edit/:course_id"
+                data="{{routeData}}"></app-route>
 
         <div class="entry" style="border: solid; border-color: lightgray; border-width: 1px">
             <form id="projectForm">
@@ -73,17 +79,10 @@
 
         <iron-ajax
                 id="requestProjectById"
-                url="../../api_v1/index.php/projects"
                 handle-as="json"
                 on-response="handleResponse">
         </iron-ajax>
     </template>
 
     <script src="js/app-edit.js"></script>
-
-    <script>
-        Polymer({
-            is: 'app-edit'
-        });
-    </script>
 </dom-module>

@@ -1,6 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="app-detail">
@@ -13,9 +15,13 @@
         </style>
 
         <app-location route="{{route}}"></app-location>
+        <app-route
+            route="{{route}}"
+            pattern="/detail/:course_id"
+            data="{{routeData}}"></app-route>
+
         <iron-ajax
                 id="requestProjectById"
-                url="../../api_v1/index.php/projects"
                 handle-as="json"
                 on-response="handleResponse">
         </iron-ajax>
@@ -29,7 +35,7 @@
                 <div class="description">
                     <h2>Beschreibung</h2>
                     <p>{{item.description}}<br/>
-                    <b>Status</b>: {{item.status}}<br/>
+                        <b>Status</b>: {{item.status}}<br/>
                         <b>Dozent</b>: {{item.supervisor_firstName}} {{item.supervisor_lastName}}<br/>
                         <b>Teilnehmer</b>: {{item.contributor}}<br/>
                         <b>Erstelldatum:</b> {{item.creation_date}}<br/>
@@ -42,10 +48,4 @@
     </template>
 
     <script src="js/app-detail.js"></script>
-
-    <script>
-        Polymer({
-            is: 'app-detail'
-        });
-    </script>
 </dom-module>
