@@ -33,10 +33,10 @@ Polymer({
                     name: "",
                     desc: ""
                 }
-            ]
+            ];
             return;
         }
-        var baseUrl = "/fhws_project/api_v1/index.php/projects";
+        var baseUrl = "../../api_v1/index.php/projects";
         this.$.requestProjectById.url = baseUrl + '/' + courseId;
         this.$.requestProjectById.generateRequest();
     }
@@ -65,10 +65,10 @@ function newEntrySubmit(data) {
 
     var program = [];
 
-    if (data.getElementsByClassName('inf')[0].checked) {
+    if (data.getElementsByClassName('Inf')[0].checked) {
         program.push('inf')
     }
-    if (data.getElementsByClassName('wInf')[0].checked) {
+    if (data.getElementsByClassName('WInf')[0].checked) {
         program.push('winf')
     }
     if (data.getElementsByClassName('EC')[0].checked) {

@@ -10,6 +10,9 @@ Polymer({
         },
         project: {
             type: Object
+        },
+        data: {
+            type: Object
         }
     },
     observers: [
@@ -26,7 +29,7 @@ Polymer({
         if(!courseId) {
             return;
         }
-        var baseUrl = "/fhws_project/api_v1/index.php/projects";
+        var baseUrl = "../../api_v1/index.php/projects";
         this.$.requestProjectById.url = baseUrl + '/' + courseId;
         this.$.requestProjectById.generateRequest();
     },

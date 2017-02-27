@@ -16,25 +16,27 @@
                 Neues Projekt anlegen</a>
         </div>
 
-        <div class="entry">
-            <h1>Beispiel 1</h1>
-            <p><b>Status</b>: offen<br/>
-                <b>Erstell-Datum</b>: 15.02.2016</p>
-            <a href="/detail/{{item.id}}" class="button">Mehr Details</a>
-        </div>
+        <template is="dom-repeat" items="[[projects]]">
+            <div class="entry">
+                <div hidden="{{!item.degreeName.Inf}}" class="circle">Inf</div>
+                <div hidden="{{!item.degreeName.WInf}}" class="circle">WInf</div>
+                <div hidden="{{!item.degreeName.EC}}" class="circle">EC</div>
+                <h1>{{item.name}}</h1>
+                <p><b>Status</b>: {{item.status}}<br/>
+                    <b>Dozent</b>: {{item.supervisor_firstName}} {{item.supervisor_lastName}}<br/>
+                    <b>Erstelldatum:</b> {{item.creation_date}}<br/>
+                    <b>Geeignet als</b>: {{item.type}}</p>
+                <a href="/detail/{{item.id}}" class="button">Mehr Details</a>
+            </div>
+        </template>
 
-        <div class="entry">
-            <h1>Beispiel 2: Ein extra langer Titel, der wirklich, wirklich lang ist</h1>
-            <p><b>Status</b>: abgeschlossen<br/>
-                <b>Erstell-Datum</b>: 12.02.2016</p>
-            <a href="/detail/{{item.id}}" class="button">Mehr Details</a>
-        </div>
-
+        <iron-ajax
+                id="requestUserProjects"
+                url="../../api_v1/index.php/projects"
+                handle-as="json"
+                on-response="handleResponse">
+        </iron-ajax>
     </template>
 
-    <script>
-        Polymer({
-            is: 'app-my-items'
-        });
-    </script>
+    <script src="js/app-my-items.js"></script>
 </dom-module>

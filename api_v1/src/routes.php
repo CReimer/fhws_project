@@ -3,7 +3,6 @@
 require_once 'classes/class.Projects.php';
 require_once 'classes/class.Login.php';
 require_once 'classes/class.User.php';
-require_once 'classes/class.Filemanager.php';
 
 $app->get('/projects', function () {
     $projectsObj = new Projects();
@@ -76,12 +75,6 @@ $app->get('/user/{id}', function ($request, $response, $args) {
     $jwtToken = $request->getHeaderLine('authorization');
     $userObj = new User($jwtToken);
     $userObj->getUserInfoById($args['id']);
-});
-
-
-$app->post('/files', function ($request, $response, $args) {
-    $filesObj = new Filemanager();
-
 });
 
 $app->get('/search/projects', function ($request, $response, $args) {
