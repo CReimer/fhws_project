@@ -53,5 +53,6 @@ Polymer({
     },
     loginSubmit: function () {
         loginSubmit(this.$.loginform.getElementsByClassName('k-number')[0].value, this.$.loginform.getElementsByClassName('password')[0].value);
+        this.$.loginDialog.toggle();
     }
 });

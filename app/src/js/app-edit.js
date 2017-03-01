@@ -15,6 +15,34 @@ Polymer({
     handleResponse: function (data) {
         console.log(data.detail.response);
         this.project = data.detail.response;
+
+/*
+        var type = data.getElementsByClassName('type')[0].value;
+        for(var i = 0; i < type.length; i++) {
+            if(type[i] === "projekt") {
+                document.getElementsByClassName("projekt")[0].checked = true;
+            }
+            if(type[i] === "bachelor") {
+                document.getElementsByClassName("bachelor")[0].checked = true;
+            }
+            if(type[i] === "master") {
+                document.getElementsByClassName("master")[0].checked = true;
+            }
+        }
+
+        var program = data.getElementsByClassName('program')[0].value;
+        for(var j = 0; j < program.length; j++) {
+            if(type[j] === "Inf") {
+                document.getElementsByClassName("Inf")[0].checked = true;
+            }
+            if(type[j] === "WInf") {
+                document.getElementsByClassName("WInf")[0].checked = true;
+            }
+            if(type[j] === "EC") {
+                document.getElementsByClassName("EC")[0].checked = true;
+            }
+        }
+*/
     },
     handleTap: function () {
         newEntrySubmit(this.$.projectForm);
@@ -36,7 +64,7 @@ Polymer({
             ];
             return;
         }
-        var baseUrl = "../../api_v1/index.php/projects";
+        var baseUrl = "/fhws_project/api_v1/index.php/projects";
         this.$.requestProjectById.url = baseUrl + '/' + courseId;
         this.$.requestProjectById.generateRequest();
     }
@@ -97,10 +125,10 @@ function newEntrySubmit(data) {
     };
     console.log(data.getElementsByClassName('title')[0].value);
     if (window.location.pathname.split('/')[2]) {
-        xhr.open("POST", "../api_v1/index.php/projects/" + window.location.pathname.split('/')[2]);
+        xhr.open("POST", "/fhws_project/api_v1/index.php/projects/" + window.location.pathname.split('/')[2]);
     }
     else {
-        xhr.open("POST", "../api_v1/index.php/projects");
+        xhr.open("POST", "/fhws_project/api_v1/index.php/projects");
     }
 
     xhr.setRequestHeader("Authorization", "Bearer " + jwt_token);

@@ -15,6 +15,11 @@ Polymer({
             type: Object
         }
     },
+
+    toggleDeleteDialog: function () {
+        this.$.deleteDialog.toggle();
+    },
+
     observers: [
         '_viewChanged(routeData)'
     ],
@@ -29,7 +34,7 @@ Polymer({
         if(!courseId) {
             return;
         }
-        var baseUrl = "../../api_v1/index.php/projects";
+        var baseUrl = "/fhws_project/api_v1/index.php/projects";
         this.$.requestProjectById.url = baseUrl + '/' + courseId;
         this.$.requestProjectById.generateRequest();
     },

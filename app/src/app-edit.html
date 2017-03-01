@@ -28,6 +28,16 @@
                 box-sizing: border-box;
                 height: 100px;
             }
+
+            #parameter-container {
+                border: 1px solid lightgray;
+                margin-bottom: 28px;
+            }
+
+            #cancelbtn {
+                margin-left: 12px;
+                background-color: lightgray;
+            }
         </style>
 
         <app-location route="{{route}}"></app-location>
@@ -40,28 +50,28 @@
             <form id="projectForm">
                 <template is="dom-repeat" items="[[project]]">
                     <div class="container">
-                        <h1>Neuer Eintrag</h1>
+                        <h1>Eintrag bearbeiten</h1>
                         <label><b>Projekttitel</b></label>
-                        <input type="text" name="name" class="title" maxlength="50" value="{{item.name}}" required>
+                        <input type="text" name="name" class="title" maxlength="100" value="{{item.name}}" required>
 
                         <label><b>Beschreibung</b></label>
-                        <textarea name="description" class="description" maxlength="500" value="{{item.description}}"
+                        <textarea name="description" class="description" maxlength="1000" value="{{item.description}}"
                                   required></textarea>
 
                         <label><b>Teilnehmer</b></label>
                         <input type="text" name="contributor" class="contributor" maxlength="80" value="{{item.contributer}}"></br></br>
 
-                        <div class="container" style="border: solid; border-color: lightgray; border-width: 1px">
+                        <div class="container" id="parameter-container">
                             <label><b>Typ:&nbsp;</b></label>
-                            <a class="block"><input name='projekt' class="projekt" type="checkbox" checked>Projektarbeit</a>
-                            <a class="block"><input name='bachelor' class="bachelor" type="checkbox" checked>Bachelorarbeit</a>
-                            <a class="block"><input name='master' class="master" type="checkbox" checked>Masterarbeit</a>
+                            <a class="block"><input name='projekt' class="projekt" type="checkbox">Projektarbeit</a>
+                            <a class="block"><input name='bachelor' class="bachelor" type="checkbox">Bachelorarbeit</a>
+                            <a class="block"><input name='master' class="master" type="checkbox">Masterarbeit</a>
                             </br>
 
                             <label><b>Studiengang:&nbsp;</b></label>
-                            <a class="block"><input name='Inf' class="Inf" type="checkbox" checked>Informatik</a>
-                            <a class="block"><input name='WInf' class="WInf" type="checkbox" checked>Wirtschaftsinformatik</a>
-                            <a class="block"><input name='EC' class="EC" type="checkbox" checked>E-Commerce</a>
+                            <a class="block"><input name='Inf' class="Inf" type="checkbox">Informatik</a>
+                            <a class="block"><input name='WInf' class="WInf" type="checkbox">Wirtschaftsinformatik</a>
+                            <a class="block"><input name='EC' class="EC" type="checkbox">E-Commerce</a>
                             </br>
 
                             <label><b>Status:&nbsp;&nbsp;</b></label>
@@ -71,8 +81,9 @@
                                 <option value="completed">Abgeschlossen</option>
                             </select>
                         </div>
+                        <a class="button" href="/detail/{{item.id}}" on-tap="handleTap">Übernehmen</a>
+                        <a class="button" id="cancelbtn" href="/detail/{{item.id}}">Abbrechen</a>
                     </div>
-                    <button type="button" class="button" on-tap="handleTap">Abschicken</button>
                 </template>
             </form>
         </div>

@@ -45,7 +45,7 @@
                 width: 200px;
                 transition: all 0.2s;
                 cursor: pointer;
-                margin: 0px;
+                margin: 0;
             }
 
             .togglebtn:hover {
@@ -147,14 +147,12 @@
                 box-sizing: border-box;
             }
 
-            #loginClose {
+            #login-cancelbtn {
                 background-color: lightgray;
                 float: left;
-                width: 40%;
             }
 
-            #loginSubmit {
-                width: 40%;
+            #login-submitbtn {
                 float: right;
             }
 
@@ -215,8 +213,8 @@
                         <input type="password" placeholder="Kennwort" name="password" class="password login-inputs" required>
 
                         <div class="clearfix">
-                            <button id="loginClose" type="button" class="button" on-tap="toggleLoginDialog">Abbrechen</button>
-                            <button id="loginSubmit" type="button" class="button" on-tap="loginSubmit">Anmelden</button>
+                            <a id="login-cancelbtn" type="button" class="button" on-tap="toggleLoginDialog">Abbrechen</a>
+                            <a id="login-submitbtn" type="button" class="button" on-tap="loginSubmit">Anmelden</a>
                         </div>
                     </div>
                 </form>

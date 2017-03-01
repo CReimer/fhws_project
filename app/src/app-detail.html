@@ -3,6 +3,10 @@
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="app-detail">
@@ -11,6 +15,60 @@
             :host {
                 display: block;
                 padding: 10px;
+            }
+
+            .icon {
+                color: lightgray;
+                width: 34px;
+                height: 34px;
+                margin: 0 12px;
+            }
+
+            .icon:hover {
+                color: #757575;
+                transition: 0.2s;
+            }
+
+            #parameter-container {
+                background: rgba(210, 210, 210, .2);
+                margin-bottom: 28px;
+                padding: 8px;
+                border-radius: 2px;
+                border: 1px solid #ccc;
+            }
+
+            #yesbtn {
+                float: left;
+                width: 40%;
+            }
+
+            #nobtn {
+                background-color: lightgray;
+                width: 40%;
+                float: right;
+            }
+
+            /*Clearfix CSS*/
+            .clearfix:before,
+            .clearfix:after {
+                content: " ";
+                display: table;
+            }
+
+            .clearfix:after {
+                clear: both;
+            }
+
+            .clearfix {
+                *zoom: 1;
+            }
+            /*End clearfix CSS*/
+
+            .deleteDialog.container {
+                border: 3px solid lightgray;
+                margin: auto;
+                padding: 16px;
+                width: 310px;
             }
         </style>
 
@@ -26,23 +84,48 @@
                 on-response="handleResponse">
         </iron-ajax>
 
+        <paper-dialog id="deleteDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" modal role="alertdialog">
+            <form id="deleteAlert" is="iron-form">
+                <div class="deleteDialog container">
+                    <h1>Wollen Sie diesen Eintrag wirklich löschen?</h1>
+                    <div class="clearfix">
+                        <button id="yesbtn" type="button" class="button" on-tap="toggleDeleteAlert">Ja</button>
+                        <button id="nobtn" type="button" class="button" on-tap="toggleDeleteAlert">Nein</button>
+                    </div>
+                </div>
+            </form>
+        </paper-dialog>
+
         <template is="dom-repeat" items="[[project]]">
             <div class="entry" style="border: solid; border-color: lightgray; border-width: 1px">
-                <div hidden="{{!item.degreeName.Inf}}" class="circle">Inf</div>
-                <div hidden="{{!item.degreeName.WInf}}" class="circle">WInf</div>
-                <div hidden="{{!item.degreeName.EC}}" class="circle">EC</div>
+                <a class="delete-icon" style="float: right; cursor: pointer" on-tap="toggleDeleteDialog">
+                    <iron-icon class="icon" icon="delete"></iron-icon>
+                    <paper-tooltip>Löschen</paper-tooltip>
+                </a>
+                <a class="edit-icon" style="float: right" href="/edit/{{item.id}}">
+                    <iron-icon class="icon" icon="create"></iron-icon>
+                    <paper-tooltip>Bearbeiten</paper-tooltip>
+                </a>
                 <h1>{{item.name}}</h1>
-                <div class="description">
+                <div id="description-container">
                     <h2>Beschreibung</h2>
-                    <p>{{item.description}}<br/>
-                        <b>Status</b>: {{item.status}}<br/>
-                        <b>Dozent</b>: {{item.supervisor}}<br/>
-                        <b>Teilnehmer</b>: {{item.contributor}}<br/>
-                        <b>Erstelldatum:</b> {{item.creation_date}}<br/>
-                        <b>Geeignet als</b>: {{item.type}}</p>
+                    <p style="padding: 0 0 8px 8px">
+                        {{item.description}}<br/>
+                    </p>
                 </div>
+                <a class="square-container">
+                    <div hidden="{{!item.degreeName.Inf}}" class="square">Inf</div>
+                    <div hidden="{{!item.degreeName.WInf}}" class="square">WInf</div>
+                    <div hidden="{{!item.degreeName.EC}}" class="square">EC</div>
+                </a>
+                <p id="parameter-container">
+                    <b>Status</b>: {{item.status}}<br/>
+                    <b>Dozent</b>: {{item.supervisor}}<br/>
+                    <b>Teilnehmer</b>: {{item.contributor}}<br/>
+                    <b>Erstelldatum:</b> {{item.creation_date}}<br/>
+                    <b>Geeignet als</b>: {{item.type}}</br>
+                </p>
                 <a href="/browse" class="button">Zurück</a>
-                <a href="/edit/{{item.id}}" class="button">Editieren</a>
             </div>
         </template>
     </template>

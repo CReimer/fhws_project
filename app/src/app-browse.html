@@ -22,6 +22,14 @@
                 -webkit-transition: width 0.4s ease-in-out;
                 transition: width 0.4s ease-in-out;
             }
+
+            #parameter-container {
+                background: rgba(210, 210, 210, .2);
+                margin-bottom: 28px;
+                padding: 8px;
+                border-radius: 2px;
+                border: 1px solid #ccc;
+            }
         </style>
 
         <div class="entry" style="margin: 0 24px; border: solid; border-color: lightgray; border-width: 1px">
@@ -47,14 +55,18 @@
 
         <template is="dom-repeat" items="[[projects]]">
             <div class="entry">
-                <div hidden="{{!item.degreeName.Inf}}" class="circle">Inf</div>
-                <div hidden="{{!item.degreeName.WInf}}" class="circle">WInf</div>
-                <div hidden="{{!item.degreeName.EC}}" class="circle">EC</div>
+                <a class="square-container" style="float: right;">
+                    <div hidden="{{!item.degreeName.Inf}}" class="square">Inf</div>
+                    <div hidden="{{!item.degreeName.WInf}}" class="square">WInf</div>
+                    <div hidden="{{!item.degreeName.EC}}" class="square">EC</div>
+                </a>
                 <h1>{{item.name}}</h1>
-                <p><b>Status</b>: {{item.status}}<br/>
+                <p id="parameter-container">
+                    <b>Status</b>: {{item.status}}<br/>
                     <b>Dozent</b>: {{item.supervisor_firstName}} {{item.supervisor_lastName}}<br/>
                     <b>Erstelldatum:</b> {{item.creation_date}}<br/>
-                    <b>Geeignet als</b>: {{item.type}}</p>
+                    <b>Geeignet als</b>: {{item.type}}</br>
+                </p>
                 <a href="/detail/{{item.id}}" class="button">Mehr Details</a>
             </div>
         </template>

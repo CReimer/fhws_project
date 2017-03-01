@@ -2,10 +2,13 @@
   "entrypoint": "index.html",
   "shell": "src/app-main.html",
   "fragments": [
-    "src/my-view1.html",
-    "src/my-view2.html",
-    "src/my-view3.html",
-    "src/my-view404.html"
+    "src/app-browse.html",
+    "src/app-detail.html",
+    "src/app-edit.html",
+    "src/app-error404.html",
+    "src/app-home.html",
+    "src/app-main.html",
+    "src/app-my-items.html"
   ],
   "sourceGlobs": [
     "src/**/*",
@@ -13,7 +16,6 @@
     "bower.json"
   ],
   "includeDependencies": [
-    "manifest.json",
     "bower_components/webcomponentsjs/webcomponents-lite.min.js"
   ]
 }
