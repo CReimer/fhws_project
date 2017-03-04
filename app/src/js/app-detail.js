@@ -32,7 +32,12 @@ Polymer({
 
     deleteItem: function () {
 
-      //Hier fehlt noch eine Funktion zum Löschen eines Eintrags
+        var id = this.baseURI.split('/').pop();
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("DELETE", "../api_v1/index.php/projects/" + id);
+        xhr.setRequestHeader("Authorization", "Bearer " + jwt_token);
+        xhr.send();
 
         var dialog = document.querySelector("#deleteDialog");
         dialog.close();
