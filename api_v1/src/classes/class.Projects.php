@@ -312,6 +312,12 @@ SQL;
         if ($params['master'] == 'on') {
             $sql .= "OR types.selector = 'master'\n";
         }
+
+        if ($params['phrase']) {
+            $sql .= "AND projects.name LIKE :phrase\n";
+            $sql .= "OR projects.description LIKE :phrase\n";
+        }
+
         $sql .= $this->getProjectBaseSqlFooter;
 
         $sth = $this->dbh->prepare($sql);
