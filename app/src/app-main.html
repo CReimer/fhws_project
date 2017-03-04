@@ -159,7 +159,7 @@
             /*Clearfix CSS*/
             .clearfix:before,
             .clearfix:after {
-                content: " "; 
+                content: " ";
                 display: table;
             }
 
@@ -182,11 +182,25 @@
                 border-radius: 50%;
             }
 
-            .loginDialog.container {
+            .loginDialog.container, .deleteDialog.container {
                 border: 3px solid lightgray;
                 margin: auto;
                 padding: 16px;
                 width: 310px;
+            }
+
+
+            .deleteDialog #yesbtn {
+                text-align: center;
+                float: left;
+                width: 100px;
+            }
+
+            .deleteDialog #nobtn {
+                background-color: lightgray;
+                text-align: center;
+                float: right;
+                width: 100px;
             }
         </style>
 
@@ -220,6 +234,18 @@
                 </form>
             </paper-dialog>
 
+            <paper-dialog id="deleteDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" modal role="alertdialog">
+                <form id="deleteAlert" is="iron-form">
+                    <div class="deleteDialog container">
+                        <h1>Wollen Sie diesen Eintrag wirklich löschen?</h1>
+                        <div class="clearfix">
+                            <a id="yesbtn" type="button" class="button" href="/browse">Ja</a>
+                            <a id="nobtn" type="button" class="button">Nein</a>
+                        </div>
+                    </div>
+                </form>
+            </paper-dialog>
+
             <app-drawer id="drawer">
                 <app-toolbar class="drawer-head">
                     <a href="/"><img src="../images/fhws_logo.png" alt="logo"></a>
@@ -245,10 +271,10 @@
                     <app-toolbar>
                         <paper-icon-button icon="menu" drawer-toggle hidden$="{{wideLayout}}"></paper-icon-button>
                         <div main-title>Projects@FHWS</div>
-                            <button class="togglebtn" style="horiz-align: right; vertical-align: middle"
-                            on-tap="toggleLoginDialog">
-                                <span>Anmelden</span>
-                            </button>
+                        <button class="togglebtn" style="horiz-align: right; vertical-align: middle"
+                                on-tap="toggleLoginDialog">
+                            <span>Anmelden</span>
+                        </button>
                     </app-toolbar>
                 </app-header>
 

@@ -5,8 +5,6 @@
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/paper-tooltip/paper-tooltip.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html">
-<link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="app-detail">
@@ -36,65 +34,19 @@
                 border-radius: 2px;
                 border: 1px solid #ccc;
             }
-
-            #yesbtn {
-                float: left;
-                width: 40%;
-            }
-
-            #nobtn {
-                background-color: lightgray;
-                width: 40%;
-                float: right;
-            }
-
-            /*Clearfix CSS*/
-            .clearfix:before,
-            .clearfix:after {
-                content: " ";
-                display: table;
-            }
-
-            .clearfix:after {
-                clear: both;
-            }
-
-            .clearfix {
-                *zoom: 1;
-            }
-            /*End clearfix CSS*/
-
-            .deleteDialog.container {
-                border: 3px solid lightgray;
-                margin: auto;
-                padding: 16px;
-                width: 310px;
-            }
         </style>
 
         <app-location route="{{route}}"></app-location>
         <app-route
-            route="{{route}}"
-            pattern="/detail/:course_id"
-            data="{{routeData}}"></app-route>
+                route="{{route}}"
+                pattern="/detail/:course_id"
+                data="{{routeData}}"></app-route>
 
         <iron-ajax
                 id="requestProjectById"
                 handle-as="json"
                 on-response="handleResponse">
         </iron-ajax>
-
-        <paper-dialog id="deleteDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" modal role="alertdialog">
-            <form id="deleteAlert" is="iron-form">
-                <div class="deleteDialog container">
-                    <h1>Wollen Sie diesen Eintrag wirklich löschen?</h1>
-                    <div class="clearfix">
-                        <button id="yesbtn" type="button" class="button" on-tap="toggleDeleteAlert">Ja</button>
-                        <button id="nobtn" type="button" class="button" on-tap="toggleDeleteAlert">Nein</button>
-                    </div>
-                </div>
-            </form>
-        </paper-dialog>
 
         <template is="dom-repeat" items="[[project]]">
             <div class="entry" style="border: solid; border-color: lightgray; border-width: 1px">
