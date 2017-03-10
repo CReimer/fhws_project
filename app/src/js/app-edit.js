@@ -20,24 +20,27 @@ Polymer({
 
     _viewChanged: function(routeData) {
         var courseId = routeData.course_id;
-        if(!courseId) {
+        if(courseId == 0) {
             var loc = window.location.pathname;
             var components = loc.split("/");
             if(components.length !== 3 && components[1] !== "detail") return;
             courseId = components[2];
         }
-        if(!courseId) {
+        if (courseId == 0) {
             this.project = [
                 {
                     name: "",
-                    desc: ""
+                    description: ""
                 }
             ];
             return;
         }
-        var baseUrl = "/fhws_project/api_v1/index.php/projects";
-        this.$.requestProjectById.url = baseUrl + '/' + courseId;
-        this.$.requestProjectById.generateRequest();
+        else {
+            var baseUrl = "../../api_v1/index.php/projects";
+            this.$.requestProjectById.url = baseUrl + '/' + courseId;
+            this.$.requestProjectById.generateRequest();
+        }
+
     }
 });
 
@@ -94,11 +97,11 @@ function newEntrySubmit(data) {
         }
     };
     console.log(data.getElementsByClassName('title')[0].value);
-    if (window.location.pathname.split('/')[2]) {
-        xhr.open("POST", "/fhws_project/api_v1/index.php/projects/" + window.location.pathname.split('/')[2]);
+    if (window.location.pathname.split('/')[2] != 0) {
+        xhr.open("POST", "../../api_v1/index.php/projects/" + window.location.pathname.split('/')[2]);
     }
     else {
-        xhr.open("POST", "/fhws_project/api_v1/index.php/projects");
+        xhr.open("POST", "../../api_v1/index.php/projects");
     }
 
     xhr.setRequestHeader("Authorization", "Bearer " + jwt_token);
