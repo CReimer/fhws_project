@@ -1,6 +1,3 @@
-/**
- * Created by christopher on 08.02.17.
- */
 var jwt_token;
 
 function loginSubmit(user, password) {

@@ -1,6 +1,3 @@
-/**
- * Created by christopher on 16.02.17.
- */
 Polymer({
     is: 'app-my-items',
     properties: {
@@ -10,7 +7,7 @@ Polymer({
         headers: {
             type: Object,
             computed: '_computeHeaders()'
-        },
+        }
     },
     _computeHeaders: function () {
         return {

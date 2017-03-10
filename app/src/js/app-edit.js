@@ -1,7 +1,3 @@
-/**
- * Created by christopher on 09.02.17.
- */
-
 Polymer({
     is: 'app-edit',
     properties: {
@@ -12,41 +8,16 @@ Polymer({
     observers: [
         '_viewChanged(routeData)'
     ],
+
     handleResponse: function (data) {
         console.log(data.detail.response);
         this.project = data.detail.response;
-
-/*
-        var type = data.getElementsByClassName('type')[0].value;
-        for(var i = 0; i < type.length; i++) {
-            if(type[i] === "projekt") {
-                document.getElementsByClassName("projekt")[0].checked = true;
-            }
-            if(type[i] === "bachelor") {
-                document.getElementsByClassName("bachelor")[0].checked = true;
-            }
-            if(type[i] === "master") {
-                document.getElementsByClassName("master")[0].checked = true;
-            }
-        }
-
-        var program = data.getElementsByClassName('program')[0].value;
-        for(var j = 0; j < program.length; j++) {
-            if(type[j] === "Inf") {
-                document.getElementsByClassName("Inf")[0].checked = true;
-            }
-            if(type[j] === "WInf") {
-                document.getElementsByClassName("WInf")[0].checked = true;
-            }
-            if(type[j] === "EC") {
-                document.getElementsByClassName("EC")[0].checked = true;
-            }
-        }
-*/
     },
+
     handleTap: function () {
         newEntrySubmit(this.$.projectForm);
     },
+
     _viewChanged: function(routeData) {
         var courseId = routeData.course_id;
         if(!courseId) {
@@ -68,7 +39,6 @@ Polymer({
         this.$.requestProjectById.url = baseUrl + '/' + courseId;
         this.$.requestProjectById.generateRequest();
     }
-
 });
 
 

@@ -1,6 +1,3 @@
-/**
- * Created by christopher on 13.02.17.
- */
 Polymer({
     is: 'app-detail',
     properties: {

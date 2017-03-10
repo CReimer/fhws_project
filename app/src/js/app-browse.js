@@ -1,7 +1,3 @@
-/**
- * Created by christopher on 09.02.17.
- */
-
 Polymer({
     is: 'app-browse',
     properties: {

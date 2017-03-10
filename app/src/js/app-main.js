@@ -1,6 +1,3 @@
-/**
- * Created by christopher on 14.02.17.
- */
 Polymer({
     is: 'app-main',
 
@@ -8,7 +5,7 @@ Polymer({
         page: {
             type: String,
             reflectToAttribute: true,
-            observer: '_pageChanged',
+            observer: '_pageChanged'
         },
 
         route: Object,
@@ -23,8 +20,7 @@ Polymer({
     },
 
     observers: [
-        '_routePageChanged(routeData.page)',
-        '_updateItem(items, idData.id)'
+        '_routePageChanged(routeData.page)'
     ],
 
     _routePageChanged: function (page) {
@@ -36,13 +32,8 @@ Polymer({
     },
 
     _pageChanged: function (page) {
-        // Load page import on demand. Show 404 page if fails
         var resolvedPageUrl = this.resolveUrl('app-' + page + '.html');
         this.importHref(resolvedPageUrl, null, this._showPage404, true);
-    },
-
-    _equal: function(value1, value2) {
-        return value1 === value2;
     },
 
     _showPage404: function () {
