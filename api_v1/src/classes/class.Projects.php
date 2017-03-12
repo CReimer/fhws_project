@@ -42,7 +42,7 @@ FROM projects
   LEFT JOIN users
     ON users_projects.user_cn = users.cn
   LEFT JOIN users AS supervisor
-    ON projects.supervisor = supervisor.id
+    ON projects.supervisor = supervisor.cn
   LEFT JOIN status
     ON projects.status = status.id
 WHERE deleted <> 1
@@ -94,14 +94,31 @@ SQL;
      * @param $form
      * @return mixed
      */
-    public function newProject($form) {
+    public function newProject($form, $user_cn) {
         $sql = <<<SQL
-INSERT INTO projects (`name`, `description`)
-VALUES (:name, :desc)
+INSERT INTO projects (`name`, `description`, `status`, `supervisor`)
+VALUES (:name, :desc, :status, :supervisor)
 SQL;
         $sth = $this->dbh->prepare($sql);
         $sth->bindParam(':name', $form['name']);
+
+        switch ($form['status']) {
+            case 'open':
+                $status = 1;
+                break;
+            case 'inProgress':
+                $status = 3;
+                break;
+            case 'completed':
+                $status = 2;
+                break;
+            default:
+                $status = 1;
+        }
+
         $sth->bindParam(':desc', $form['desc']);
+        $sth->bindParam(':status', $status);
+        $sth->bindParam(':supervisor', $user_cn);
         $sth->execute();
 
         $last_id = $this->dbh->lastInsertId();
@@ -146,13 +163,13 @@ SQL;
         foreach (explode(',', $form['program']) as $program) {
             $program_id = '';
             switch ($program) {
-                case 'Inf':
+                case 'inf':
                     $program_id = 1;
                     break;
-                case 'WInf':
+                case 'winf':
                     $program_id = 2;
                     break;
-                case 'EC':
+                case 'ec':
                     $program_id = 3;
             }
             $sth2 = $this->dbh->prepare($sql_program);

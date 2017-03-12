@@ -25,7 +25,7 @@ $app->post('/projects', function ($request, $response, $args) {
 
 
     $projectsObj = new Projects();
-    echo $projectsObj->newProject($request->getParsedBody());
+    echo $projectsObj->newProject($request->getParsedBody(), json_decode($userObj->getUserInfo())->cn);
 });
 
 
